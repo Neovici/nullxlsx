@@ -1,0 +1,22 @@
+{
+  "name": "nullxlsx",
+  "version": "1.0.0",
+  "description": "Minimal xlsx file and zip archive generator in javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js",
+    "prepare": "node build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.github.com/Neovici/nullxlsx.git"
+  },
+  "keywords": [
+    "xlsx"
+  ],
+  "author": "jokedst@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "google-closure-compiler": "^20170806.0.0"
+  }
+}
