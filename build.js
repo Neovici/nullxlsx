@@ -51,7 +51,7 @@ new ClosureCompiler([
 	'--js=exports/nullxlsx-exports.js',
 	'--js_output_file=dist/nullxlsx.min.js',
 	'--create_source_map=sourcemap/nullxlsx.min.js.map',
-]).run(Report('nullboth'));
+]).run(Report('nullxlsx'));
 
 new ClosureCompiler([
 	'--jscomp_warning=lintChecks',
@@ -70,4 +70,4 @@ new ClosureCompiler([
 	'--js=exports/nullxlsx-exports.js',
 	'--js_output_file=dist/nullxlsxonly.min.js',
 	'--create_source_map=sourcemap/nullxlsxonly.min.js.map',
-]).run(Report('nullxlsx'));
+]).run(Report('nullxlsxonly'));
