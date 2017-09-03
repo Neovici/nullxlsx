@@ -20,12 +20,9 @@ class Counter extends Transform {
 function Report(name){
 	return function showResult(exitCode, stdOut, stdErr) {
 		if (exitCode === 0) {
-			console.info(name+': Success');
-			if (stdOut)
-				console.info('=== Output recorded ===:\n' + stdOut);
-			if (stdOut)
-				console.info('=== Warnings recorded ===:\n' + stdErr);			
-			
+            console.info(name + ': Success');
+            console.info(stdOut + '\n' + stdErr);
+
 			// gzip just to see "real" size
 			var minSize = fs.statSync('./dist/'+name+'.min.js').size;
 			var gzip = zlib.createGzip();

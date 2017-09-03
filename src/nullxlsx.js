@@ -8,6 +8,7 @@ class NullXlsx {
      */
     constructor(filename, options) {
         this.filename = filename;
+        /** @type {Array<{id:number, name:string, data:Array<Array<*>>}>} */
         this.sheets = [];
         this.frozen = !!(options && options['frozen']);
         this.autoFilter = !!(options && options['filter']);
@@ -23,7 +24,7 @@ class NullXlsx {
      */
     addSheetFromData(data, name) {
         var i = this.sheets.length + 1;
-        this.sheets.push({id:i, name:this.escapeXml(name || 'Sheet'+i), data:data});
+        this.sheets.push({ id: i, name: this.escapeXml(name || 'Sheet' + i), data: data });
 		return this;
     }
 
@@ -34,7 +35,7 @@ class NullXlsx {
     generate() {
         var files=[], f
             ,zip = new NullZipArchive(this.filename,false)
-            ,xmlh='';
+            ,xmlh = '';
         
         files.push(f = {name:'xl/styles.xml'});
         f.xml = xmlh + '<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">'
@@ -55,20 +56,20 @@ class NullXlsx {
             
         files.push(f = {name:'xl/workbook.xml'});
         f.xml = xmlh + '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><workbookPr/><sheets>'
-		+ '<sheet state="visible" name="'+this.sheets[0].name+'" sheetId="1" r:id="rId3"/>'
-		+ '</sheets><definedNames/><calcPr/></workbook>';
+            + this.sheets.map(x => `<sheet state="visible" name="${x.name}" sheetId="${x.id}" r:id="rId${x.id+2}"/>`).join('')
+		    + '</sheets><definedNames/><calcPr/></workbook>';
                     
         files.push(f = {name:'xl/_rels/workbook.xml.rels'});
         f.xml = xmlh + '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
             + '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml" />'
             + '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings" Target="sharedStrings.xml"/>'
-            + '<Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/>'
+            + this.sheets.map(x =>`<Relationship Id="rId${x.id+2}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${x.id}.xml"/>`).join('')
             + '</Relationships>';
             
         files.push(f = {name:'[Content_Types].xml'});
         f.xml = xmlh + '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default ContentType="application/xml" Extension="xml"/>'
             + '<Default ContentType="application/vnd.openxmlformats-package.relationships+xml" Extension="rels"/>'
-            + '<Override ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml" PartName="/xl/worksheets/sheet1.xml"/>'
+            + this.sheets.map(x=>`<Override ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml" PartName="/xl/worksheets/sheet${x.id}.xml"/>`).join('')
             + '<Override ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml" PartName="/xl/sharedStrings.xml"/>'
             + '<Override ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml" PartName="/xl/styles.xml" />'
             + '<Override ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml" PartName="/xl/workbook.xml"/></Types>';
@@ -76,31 +77,38 @@ class NullXlsx {
         files.push(f = {name:'_rels/.rels'});
         f.xml = xmlh + '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>';
 
-        // Right now only one sheet works - adding sheets would make this part loop
-        files.push(f = {name:'xl/worksheets/sheet1.xml'});
-        f.xml = xmlh + '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"'
-        + (this.frozen ? ' tabSelected="1"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView>':'/>')
-        +'</sheetViews><sheetFormatPr customHeight="1" defaultColWidth="14.43" defaultRowHeight="15.75"/><sheetData>';
-        var data = this.sheets[0].data;
-        for(var r=1; r <= data.length; r++){
-            f.xml += '<row r="'+r+'">';
-            var row = data[r-1];
-            for(var c=0; c < row.length; c++) {
-                var value = row[c];
-                var cellName = this.colName(c) + r;
-                var type = typeof value;
+        for (let x of this.sheets) {
+            let maxLength = 0;
+            files.push(f = { name: `xl/worksheets/sheet${x.id}.xml` });
+            f.xml = xmlh + '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"'
+                + (this.frozen ? ' tabSelected="1"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView>' : '/>')
+                + '</sheetViews><sheetFormatPr customHeight="1" defaultColWidth="17.5" defaultRowHeight="15.75"/><sheetData>';
+            var data = x.data;
+            for (var r = 1; r <= data.length; r++) {
+                f.xml += '<row r="' + r + '">';
                 var style = (this.frozen && r === 1) ? ' s="1"' : '';
-                if(type === "number") f.xml += '<c r="'+cellName+'"'+style+'><v>'+value+'</v></c>';
-                else if(type==="string") f.xml += '<c t="inlineStr"'+style+'><is><t>'+this.escapeXml(value)+'</t></is></c>';
-                else if(value instanceof Date) {
-                    style = (value.getHours() || value.getMinutes() || value.getSeconds()) ? 3 : 2;
-                    f.xml += '<c s="'+style+'"><v>'+this.dateToExcelDate(value)+'</v></c>';
+                var row = data[r - 1];
+                if (row.length > maxLength) maxLength = row.length;
+                for (var c = 0; c < row.length; c++) {
+                    var value = row[c];
+                    var cellName = this.colName(c) + r;
+                    if (typeof value === "number")
+                        f.xml += `<c r="${cellName}"${style}><v>${value}</v></c>`;
+                    else if (value instanceof Date) {
+                        let dateStyle = (value.getHours() || value.getMinutes() || value.getSeconds()) ? 3 : 2;
+                        f.xml += `<c s="${dateStyle}"><v>${this.dateToExcelDate(value)}</v></c>`;
+                    }
+                    else
+                        f.xml += `<c t="inlineStr"${style}><is><t>${this.escapeXml(value.toString())}</t></is></c>`;
                 }
+                f.xml += '</row>';
             }
-            f.xml += '</row>';
+            f.xml += '</sheetData>';
+            if (this.autoFilter)
+                f.xml += `<autoFilter ref="A1:${this.colName(maxLength)}${data.length}"/>`;
+            f.xml += '</worksheet>';
         }
-        f.xml += '</sheetData>'+(this.autoFilter ? '<autoFilter ref="A1:'+(this.colName(Math.max(...data.map(x=>x.length))) + data.length)+'"/>':'')+'</worksheet>';
-        
+
         // Add all to zip
         files.forEach(function(f) { zip.addFileFromString(f.name, f.xml); });		
         

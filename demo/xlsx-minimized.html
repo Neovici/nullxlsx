@@ -22,7 +22,7 @@
 		
 		// Creates a test file
 		var xlsx = new NullXlsx('test.xlsx');
-		xlsx.addSheetFromData([['Title 1', 'Title 2'], ['Carl', 12.4],['Mia', 678, new Date(2017,7-1,10)],[new Date()]]);
+        xlsx.addSheetFromData([['Title 1', 'Title 2'], ['Carl', 12.4], ['Mia', 678, new Date(2017, 7 - 1, 10)], [new Date()]]);
 		document.body.appendChild(xlsx.createDownloadLink('Download test.xlsx'));	
 		
 		document.body.append(document.createElement("br"));
@@ -31,6 +31,15 @@
 		xlsx = new NullXlsx('filteredfrozen.xlsx', {frozen:1,filter:1});
 		xlsx.addSheetFromData([['Title A', 'Title B'], ['Carl', 12.4],['Mia', 678, new Date(2017,7-1,10)],[new Date()]], 'Custom sheet name');
 		document.body.appendChild(xlsx.createDownloadLink('Download xlsx with frozen title row and filters'));
+
+		document.body.append(document.createElement("br"));
+
+		// Multiple sheets, using command chaining
+		document.body.appendChild(
+		    new NullXlsx('multisheet.xlsx', { frozen: 1, filter: 1 })
+		    .addSheetFromData([['Who', 'Why', 'When'], ['Carl', 12.4, new Date()], ['Mia', 678, new Date()]], 'People')
+		    .addSheetFromData([['What', 'Where'], ['Car', 'Garage'], ['Plane', 'Air']], 'Items')
+		    .createDownloadLink('Download xlsx with multiple sheets'));
 		
 		trace('All done!');
 	</script>
