@@ -1,5 +1,5 @@
 var trace = trace || function (o) { };
-let crcTableEDB88320 = [];
+let crcTableEDB88320 = null;
 
 /**
  * A non-compressing zip archive
