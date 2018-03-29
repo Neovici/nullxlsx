@@ -1,2 +1,6 @@
 node_modules
 /.vs
+debug.log
+yarn-error.log
+.eslintcache
+.DS_Store
