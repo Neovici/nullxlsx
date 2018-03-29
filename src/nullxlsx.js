@@ -84,17 +84,17 @@ class NullXlsx {
 			f.xml = xmlh + '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"'
 								+ (this.frozen ? ' tabSelected="1"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView>' : '/>')
 								+ '</sheetViews><sheetFormatPr customHeight="1" defaultColWidth="17.5" defaultRowHeight="15.75"/><sheetData>';
-			var data = x.data;
-			for (var r = 1; r <= data.length; r++) {
+			const data = x.data;
+			for (let r = 1; r <= data.length; r++) {
 				f.xml += '<row r="' + r + '">';
-				var style = this.frozen && r === 1 ? ' s="1"' : '';
-				var row = data[r - 1];
+				const style = this.frozen && r === 1 ? ' s="1"' : '',
+					row = data[r - 1];
 				if (row.length > maxLength) {
 					maxLength = row.length;
 				}
-				for (var c = 0; c < row.length; c++) {
-					var value = row[c];
-					var cellName = this.colName(c) + r;
+				for (let c = 0; c < row.length; c++) {
+					const value = row[c],
+						cellName = this.colName(c) + r;
 					if (typeof value === 'number') {
 						f.xml += `<c r="${cellName}"${style}><v>${value}</v></c>`;
 					} else if (value instanceof Date) {
