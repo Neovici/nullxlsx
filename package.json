@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "Minimal xlsx file and zip archive generator in javascript",
   "main": "index.js",
+	"devDependencies": {
+		"eslint": "^4.10.0",
+		"eslint-plugin-html": "^3.2.2",
+		"eslint-plugin-mocha": "^4.11.0"
+	},
   "scripts": {
     "test": "node test.js",
     "prepare": "node build.js"
