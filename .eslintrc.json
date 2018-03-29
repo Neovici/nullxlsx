@@ -9,7 +9,11 @@
 		"CustomElements": false,
 		"HTMLImports": false,
 		"Polymer": false,
-		"WeakMap": false
+		"WeakMap": false,
+		"require": false,
+		"NullXlsx": false,
+		"NullZipArchive": false,
+		"trace": false
 	},
 	"plugins": [
 		"html"
@@ -90,7 +94,13 @@
 		"no-use-before-define": "error",
 		"no-useless-call": "error",
 		"no-useless-concat": "error",
-		"one-var": "error",
+		"one-var": [
+					"error",
+					{
+						"var": "always",
+						"let": "always"
+					}
+				],
 		"one-var-declaration-per-line": [
 			"error",
 			"always"
