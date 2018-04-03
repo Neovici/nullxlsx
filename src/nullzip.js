@@ -63,14 +63,15 @@ class NullZipArchive {
 		}
 
 		// Folders
-		var result,
+		let result,
 			created = [];
 		if (this.createFolderEntries) { // apparently optional
-			var regx = /\//gi;
-			for (f of this.files) {
+			const regx = /\//gi;
+			for (let f of this.files) {
 				let filename = f.name;
-				while (result = regx.exec(filename)) {
-					var f = {name: filename.substr(0, result.index + 1), size: 0, crc: 0, data: new Uint8Array(0)};
+				result = regx.exec(filename);
+				while (result) {
+					const f = {name: filename.substr(0, result.index + 1), size: 0, crc: 0, data: new Uint8Array(0)};
 					if (typeof filesDict[f.name] === 'undefined') {
 						filesDict[f.name] = f;
 						created.push(f);
@@ -86,18 +87,18 @@ class NullZipArchive {
 
 		// Calculate file size
 		// Each file takes 30+name+data and in CD 46+name, so 76+name.length*2+data per file, and 22 for footer
-		var size = this.files.reduce(function (s, f) {
+		const size = this.files.reduce(function (s, f) {
 			return s + 76 + f.name.length * 2 + f.size;
 		}, 22);
 		trace('Estimated file size: ' + size);
 
 		this.buffer = new ArrayBuffer(size);
-		var bw = new BinaryWriter(this.buffer);
+		const bw = new BinaryWriter(this.buffer),
 
-		// Prepare file block header. We set same date/time on all (=now)
-		var dirFileHeader = this.hex2u8a('504b0304140000000000');
+			// Prepare file block header. We set same date/time on all (=now)
+			dirFileHeader = this.hex2u8a('504b0304140000000000');
 
-		for (f of this.files) {
+		for (let f of this.files) {
 			f.offs = bw.i;
 			bw.writeByteArray(dirFileHeader);
 			bw.uint16(this.timeInt);
@@ -115,9 +116,9 @@ class NullZipArchive {
 		}
 
 		// Central Directory
-		var cdStart = bw.i;
-		var cdHeader = this.hex2u8a('504b01023f00140000000000');
-		for (f of this.files) {
+		const cdStart = bw.i,
+			cdHeader = this.hex2u8a('504b01023f00140000000000');
+		for (let f of this.files) {
 			bw.writeByteArray(cdHeader);
 			bw.uint16(this.timeInt);
 			bw.uint16(this.dateInt);
@@ -133,7 +134,7 @@ class NullZipArchive {
 			bw.uint32(f.offs);
 			bw.writeASCII(f.name);
 		}
-		var cdSize = bw.i - cdStart;
+		const cdSize = bw.i - cdStart;
 
 		// End block
 		bw.writeByteArray(this.hex2u8a('504b050600000000'));
@@ -195,13 +196,13 @@ class NullZipArchive {
 		if (!crcTableEDB88320) { // Cache CRC table
 			crcTableEDB88320 = [];
 			for (n = 0; n < 256; c = ++n) {
-				for (var k = 0; k < 8; k++) {
+				for (let k = 0; k < 8; k++) {
 					c = c & 1 ? 0xedb88320 ^ c >>> 1 : c >>> 1;
 				}
 				crcTableEDB88320[n] = c;
 			}
 		}
-		for (var i = 0; i < u8arr.byteLength; i++) {
+		for (let i = 0; i < u8arr.byteLength; i++) {
 			z = z >>> 8 ^ crcTableEDB88320[(z ^ u8arr[i]) & 0xFF];
 		}
 		return (z ^ -1) >>> 0;
@@ -214,7 +215,7 @@ class NullZipArchive {
 		 */
 	hex2u8a(string) {
 		var bytes = new Uint8Array(Math.ceil(string.length / 2));
-		for (var i = 0; i < bytes.length; i++) {
+		for (let i = 0; i < bytes.length; i++) {
 			bytes[i] = parseInt(string.substr(i * 2, 2), 16);
 		}
 		return bytes;
@@ -239,6 +240,7 @@ class BinaryWriter {
 	/**
 		 * Write unsigned 8-bit integer
 		 * @param {number} v Number to write
+		 * @returns {void}
 		 */
 	uint8(v) {
 		this.dw.setUint8(this.i++, v);
@@ -247,6 +249,7 @@ class BinaryWriter {
 	/**
 		 * Write unsigned 16-bit integer
 		 * @param {number} v Number to write
+		 * @returns {void}
 		 */
 	uint16(v) {
 		this.dw.setUint16(this.i, v, this.le);
@@ -256,6 +259,7 @@ class BinaryWriter {
 	/**
 		 * Write unsigned 32-bit integer
 		 * @param {number} v Number to write
+		 * @returns {void}
 		 */
 	uint32(v) {
 		this.dw.setUint32(this.i, v, this.le);
@@ -265,6 +269,7 @@ class BinaryWriter {
 	/**
 		 * Add array buffer
 		 * @param {Uint8Array} byteArray Data to write
+		 * @returns {void}
 		 */
 	writeByteArray(byteArray) {
 		if (!(byteArray instanceof Uint8Array)) {
@@ -277,6 +282,7 @@ class BinaryWriter {
 	/**
 		 * Add string
 		 * @param {string} string String to write
+		 * @returns {void}
 		 */
 	writeASCII(string) {
 		for (var i = 0; i < string.length; i++) {

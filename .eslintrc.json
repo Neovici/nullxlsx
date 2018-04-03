@@ -13,7 +13,8 @@
 		"require": false,
 		"NullXlsx": false,
 		"NullZipArchive": false,
-		"trace": false
+		"trace": false,
+		"BinaryWriter": false
 	},
 	"plugins": [
 		"html"
