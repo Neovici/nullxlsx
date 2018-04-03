@@ -14,7 +14,8 @@
 		"NullXlsx": false,
 		"NullZipArchive": false,
 		"trace": false,
-		"BinaryWriter": false
+		"BinaryWriter": false,
+		"module": false
 	},
 	"plugins": [
 		"html"

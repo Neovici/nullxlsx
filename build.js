@@ -1,37 +1,37 @@
 console.info('Starting compiling of all 3 distributables...');
 
-var zlib = require('zlib');
-var fs = require('fs');
-var ClosureCompiler = require('google-closure-compiler').compiler;
-const { Transform } = require('stream');
+const zlib = require('zlib'),
+	fs = require('fs'),
+	ClosureCompiler = require('google-closure-compiler').compiler,
+	{ Transform } = require('stream');
 
 // Simple stream to count data
 class Counter extends Transform {
 	constructor(options) {
 		super(options);
-		this.count=0;
+		this.count = 0;
 	}
 	_transform(data, encoding, callback) {
-		this.count+=data.byteLength;	  
-		callback(null,data);
+		this.count += data.byteLength;
+		callback(null, data);
 	}
 }
 
-function Report(name){
+function Report(name) {
 	return function showResult(exitCode, stdOut, stdErr) {
 		if (exitCode === 0) {
-            console.info(name + ': Success');
-            console.info(stdOut + '\n' + stdErr);
+			console.info(name + ': Success');
+			console.info(stdOut + '\n' + stdErr);
 
 			// gzip just to see "real" size
-			var minSize = fs.statSync('./dist/'+name+'.min.js').size;
-			var gzip = zlib.createGzip();
-			var r = fs.createReadStream('./dist/'+name+'.min.js');
-			var w = new Counter();
-			w.on('finish', () => console.log(name+': size minified: '+minSize+' bytes (gz: '+w.count+')'));
+			const minSize = fs.statSync('./dist/' + name + '.min.js').size,
+				gzip = zlib.createGzip(),
+				r = fs.createReadStream('./dist/' + name + '.min.js');
+			var w = new Counter(),
+			w.on('finish', () => console.log(name + ': size minified: ' + minSize + ' bytes (gz: ' + w.count + ')'));
 			r.pipe(gzip).pipe(w);
 		} else {
-			console.info(name+': Exit code: ' + exitCode);
+			console.info(name + ': Exit code: ' + exitCode);
 			console.info(stdOut + '\n' + stdErr);
 		}
 	};
