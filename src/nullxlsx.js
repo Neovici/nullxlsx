@@ -1,4 +1,10 @@
-trace = trace || function (o) {};
+/* eslint no-global-assign: off */
+
+trace = trace || function (o) {
+	if (o) {
+		console.log();
+	}
+};
 
 class NullXlsx {
 	/**
