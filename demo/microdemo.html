@@ -2,15 +2,15 @@
 Example
 <script>
 	// Data should be array of array
-	var data = [['Title 1', 'Title 2'], 
-		['Carl', 12.4, new Date(2017, 7 - 1, 10)], 
-		['Mia', 678, new Date()]
-	];
-	
-	// Create xlsl
-	var xlsx = new NullXlsx('test.xlsx')
-		.addSheetFromData(data, 'Sheet name');
-	
+	const data = [['Title 1', 'Title 2'],
+			['Carl', 12.4, new Date(2017, 7 - 1, 10)],
+			['Mia', 678, new Date()]
+		],
+
+		// Create xlsl
+		xlsx = new NullXlsx('test.xlsx')
+			.addSheetFromData(data, 'Sheet name');
+
 	// Generate a link to download the file
 	document.body.appendChild(xlsx.createDownloadLink('Download test.xlsx'));
 </script>

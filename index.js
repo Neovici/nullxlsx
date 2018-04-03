@@ -20,7 +20,7 @@ if (!('TextEncoder' in window)) {
 				if (code < 0x80) {
 					ret.push(code);
 				} else if (code >= 0x10000) {
-					ret.push(0xF0 | code >> 18, 0x80 | code >> 12 & 63,  0x80 | code >> 6 & 63, 0x80 | code & 63);
+					ret.push(0xF0 | code >> 18, 0x80 | code >> 12 & 63, 0x80 | code >> 6 & 63, 0x80 | code & 63);
 				} else if (code >= 0x800) {
 					ret.push(0xE0 | code >> 12,  0x80 | code >> 6 & 63, 0x80 | code & 63);
 				} else {
