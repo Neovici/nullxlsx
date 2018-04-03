@@ -6,6 +6,8 @@
 
 var fs = require('fs');
 
+/* eslint no-global-assign: off */
+
 // Faking some browser stuff
 if (typeof window === 'undefined') {
 	window = {};
