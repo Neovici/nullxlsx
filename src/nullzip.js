@@ -1,5 +1,10 @@
-var trace = trace || function (o) { };
-let crcTableEDB88320 = null;
+/* eslint no-use-before-define: off, no-unused-vars: off */
+let trace = trace || function (o) {
+		if (o) {
+		// function used in demo
+		}
+	},
+	crcTableEDB88320 = null;
 
 /**
  * A non-compressing zip archive

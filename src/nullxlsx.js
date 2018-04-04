@@ -1,4 +1,4 @@
-/* eslint no-global-assign: off */
+/* eslint no-global-assign: off, no-unused-vars: off */
 
 trace = trace || function (o) {
 	if (o) {
@@ -29,7 +29,7 @@ class NullXlsx {
 		 * @return {NullXlsx} Returns itself for method chaining
 		 */
 	addSheetFromData(data, name) {
-		var i = this.sheets.length + 1;
+		let i = this.sheets.length + 1;
 		this.sheets.push({ id: i, name: this.escapeXml(name || 'Sheet' + i), data: data });
 		return this;
 	}
@@ -39,7 +39,7 @@ class NullXlsx {
 		 * @return {ArrayBuffer} Array buffer containing the xlsx
 		 */
 	generate() {
-		var files = [],
+		let files = [],
 			f,
 			zip = new NullZipArchive(this.filename, false),
 			xmlh = '';
@@ -136,7 +136,7 @@ class NullXlsx {
 		if (!this.buffer) {
 			this.generate();
 		}
-		var downloadBlob = new Blob([this.buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+		const downloadBlob = new Blob([this.buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 		if (this.lastDownloadBlobUrl) {
 			window.URL.revokeObjectURL(this.lastDownloadBlobUrl);
 		}
@@ -148,7 +148,7 @@ class NullXlsx {
 		* @param {(string|Element)} linkText Existing link object or text to set on new link
 		* @return {!Element} Link object */
 	createDownloadLink(linkText) {
-		var link = linkText instanceof HTMLAnchorElement ? linkText : document.createElement('a');
+		const link = linkText instanceof HTMLAnchorElement ? linkText : document.createElement('a');
 		if (typeof linkText === 'string') {
 			link.innerHTML = linkText;
 		}
