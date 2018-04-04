@@ -43,7 +43,8 @@
 
 		// files is a FileList of File objects. List some properties.
 		let output = [];
-		for (let i = 0, f; f = files[i]; i++) {
+		for (let i = 0, f; files[i]; i++) {
+			f = files[i];
 			output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
 				f.size, ' bytes, last modified: ',
 				f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
@@ -173,16 +174,16 @@
 
 	class BinaryReader {
 		constructor(buffer) {
-			this.dw = new DataView(buffer); this.i = 0; this.le = true;this.utf8decoder = new TextDecoder('utf-8');
+			this.dw = new DataView(buffer); this.i = 0; this.le = true; this.utf8decoder = new TextDecoder('utf-8');
 		}
 		get uint8() {
 			return this.dw.getUint8(this.i++);
 		}
 		get uint32() {
-			var r = this.dw.getUint32(this.i, this.le);this.i += 4;return r;
+			const r = this.dw.getUint32(this.i, this.le); this.i += 4; return r;
 		}
 		get uint16() {
-			var r = this.dw.getUint16(this.i, this.le);this.i += 2;return r;
+			const r = this.dw.getUint16(this.i, this.le); this.i += 2; return r;
 		}
 		getString(length) {
 			if (length === 0) {
@@ -236,7 +237,7 @@
 	}
 
 	function getBuffer() {
-		var xhr = new XMLHttpRequest();
+		const xhr = new XMLHttpRequest();
 		xhr.open('GET', 'http://localhost/xlsx/min.xlsx', true);
 		xhr.responseType = 'arraybuffer';
 
@@ -249,7 +250,7 @@
 	}
 
 	// Test of nullzip
-	var nz = new NullZipArchive('name.zip');
+	const nz = new NullZipArchive('name.zip');
 	nz.addFileFromString('subdir/subfile.txt', '[SUBFILECONTENT]');
 	const nzbuf = nz.generate(),
 		nzResult = Decode(nzbuf);
