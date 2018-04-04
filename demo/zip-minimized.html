@@ -35,7 +35,8 @@
 
 			// files is a FileList of File objects. List some properties.
 			let output = [];
-			for (var i = 0, f; f = files[i]; i++) {
+			for (var i = 0, f; files[i]; i++) {
+				f = files[i];
 				output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
 					f.size, ' bytes, last modified: ',
 					f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
