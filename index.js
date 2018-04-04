@@ -33,7 +33,7 @@ if (!('TextEncoder' in window)) {
 		};
 	};
 }
-
+/* eslint no-eval: off */
 // file is included here:
 eval(fs.readFileSync('dist/nullboth.min.js') + '');
 
