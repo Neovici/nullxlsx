@@ -27,7 +27,7 @@ function Report(name) {
 			const minSize = fs.statSync('./dist/' + name + '.min.js').size,
 				gzip = zlib.createGzip(),
 				r = fs.createReadStream('./dist/' + name + '.min.js');
-			var w = new Counter(),
+			var w = new Counter();
 			w.on('finish', () => console.log(name + ': size minified: ' + minSize + ' bytes (gz: ' + w.count + ')'));
 			r.pipe(gzip).pipe(w);
 		} else {
