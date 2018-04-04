@@ -1,10 +1,18 @@
 /* eslint no-use-before-define: off, no-unused-vars: off */
-let trace = trace || function (o) {
-		if (o) {
-		// function used in demo
-		}
-	},
-	crcTableEDB88320 = null;
+/**
+	 * trace function was empty and redefined in demo but here does not complile with old code
+	 * let trace = trace || function(o){} error on yarn prepare: Illegal variable reference before declaration: trace
+
+	 * @param {string} o some log message
+	 * @returns {void}
+	 */
+var trace = function (o) {
+	if (o) {
+		console.log(o);
+	}
+};
+
+let crcTableEDB88320 = null;
 
 /**
  * A non-compressing zip archive
