@@ -35,8 +35,10 @@ checks:
       threshold: 4
   similar-code:
     enabled: true
+    threshold: 6
   identical-code:
     enabled: true
+    threshold: 6
 
 plugins:
   eslint:
