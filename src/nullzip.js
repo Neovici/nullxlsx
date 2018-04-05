@@ -94,13 +94,13 @@ class NullZipArchive {
 		}
 		// Append folders to files array and sort it so folders always come before the files in them
 		Array.prototype.push.apply(this.files, created);
-		this.files.sort(function (a, b) {
+		this.files.sort((a, b) => {
 			return a.name.length - b.name.length || a.name.localeCompare(b.name);
 		});
 
 		// Calculate file size
 		// Each file takes 30+name+data and in CD 46+name, so 76+name.length*2+data per file, and 22 for footer
-		const size = this.files.reduce(function (s, f) {
+		const size = this.files.reduce((s, f) => {
 			return s + 76 + f.name.length * 2 + f.size;
 		}, 22);
 		trace('Estimated file size: ' + size);

@@ -120,7 +120,7 @@ class NullXlsx {
 		}
 
 		// Add all to zip
-		files.forEach(function (f) {
+		files.forEach(f => {
 			zip.addFileFromString(f.name, f.xml);
 		});
 
@@ -177,7 +177,7 @@ class NullXlsx {
 		 * @return {string} Escaped string
 		 */
 	escapeXml(unsafe) {
-		return unsafe.replace(/[<>&'"]/g, function (c) {
+		return unsafe.replace(/[<>&'"]/g, c => {
 			return ['&lt;', '&gt;', '&amp;', '&apos;', '&quot;']['<>&\'"'.indexOf(c)];
 		});
 	}
