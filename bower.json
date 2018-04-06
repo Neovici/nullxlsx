@@ -1,0 +1,27 @@
+{
+	"name": "nullxlsx",
+	"description": "Minimal xlsx file and zip archive generator in javascript",
+	"main": "index.js",
+	"ignore": [
+		"node_modules",
+		"bower_components"
+	],
+	"devDependencies": {
+		"web-component-tester": "^6.0.0",
+		"webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+	},
+	"variants": {
+		"1.x": {
+			"devDependencies": {
+				"web-component-tester": "^4.0.0",
+				"webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+			},
+			"resolutions": {
+				"webcomponentsjs": "^0.7"
+			}
+		}
+	},
+	"resolutions": {
+		"webcomponentsjs": "^1.0.0"
+	}
+}
