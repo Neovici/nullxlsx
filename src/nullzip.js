@@ -76,14 +76,12 @@ class NullZipArchive {
 		}
 
 		// Folders
-		let result,
-			created = [];
+		let created = [];
 		if (this.createFolderEntries) { // apparently optional
 			const regx = /\//gi;
 			for (let f of this.files) {
 				let filename = f.name;
-				result = regx.exec(filename);
-				while (result) {
+				for (let result = regx.exec(filename); result !== null; result = regx.exec(filename)) {
 					const f = {name: filename.substr(0, result.index + 1), size: 0, crc: 0, data: new Uint8Array(0)};
 					if (typeof filesDict[f.name] === 'undefined') {
 						filesDict[f.name] = f;
