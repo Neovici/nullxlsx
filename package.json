@@ -3,9 +3,22 @@
   "version": "1.0.0",
   "description": "Minimal xlsx file and zip archive generator in javascript",
   "main": "index.js",
+	"directories": {
+	"test": "test"
+},
+	"devDependencies": {
+		"eslint": "^4.10.0",
+		"eslint-plugin-html": "^3.2.2",
+		"eslint-plugin-mocha": "^4.11.0",
+		"polymer-cli": "^1.6.0",
+		"web-component-tester-istanbul": "Neovici/web-component-tester-istanbul"
+	},
   "scripts": {
-    "test": "node test.js",
-    "prepare": "node build.js"
+		"start": "polymer serve -o",
+		"postinstall": "polymer install --variants",
+  	"test": "polymer test",
+    "prepare": "node build.js",
+		"lint": "eslint --cache --ext .js,.html ."
   },
   "repository": {
     "type": "git",

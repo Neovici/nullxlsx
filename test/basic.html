@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+	<title>nullxlsx test</title>
+
+	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+	<script src="../../web-component-tester/browser.js"></script>
+	<script src="../../test-fixture/test-fixture-mocha.js"></script>
+
+	<link rel="import" href="../../test-fixture/test-fixture.html">
+	<link rel="import" href="../../iron-test-helpers/iron-test-helpers.html">
+	<script src="../src/nullzip.js"></script>
+	<script src="../src/nullxlsx.js"></script>
+</head>
+<body>
+	<test-fixture id="basic">
+		<template>
+			<h3>Generate xlsx</h3>
+			<p id="traceout"></p>
+		</template>
+	</test-fixture>
+
+	<script>
+	/*global suite assert test fixture sinon chai */
+	(function () {
+		'use strict';
+
+		sinon.assert.expose(chai.assert, { prefix: '' });
+		suite('basic', () => {
+
+			/* eslint no-unused-vars: off */
+			var traceout = document.getElementById('traceout'),
+				lastMark = performance.now(),
+				// tShow trace with timestamps
+				customTracingFunction = text => {
+					var mark = performance.now();
+					traceout.innerHTML += (mark - lastMark).toFixed(1) + 'ms : ' + text + '<br/>';
+				};
+
+			test('adds sheet from simple data', () => {
+				const basic = fixture('basic');
+
+				// Creates a test file
+				var xlsx = new NullXlsx('test.xlsx');
+				xlsx.addSheetFromData([['Title 1', 'Title 2'], ['Carl', 12.4], ['Mia', 678]]);
+				assert.deepEqual(xlsx.sheets[0].data[0], ['Title 1', 'Title 2']);
+				assert.deepEqual(xlsx.sheets[0].data[1], ['Carl', 12.4]);
+				assert.deepEqual(xlsx.sheets[0].data[2], ['Mia', 678]);
+			});
+
+			test('createDownloadLink calls generate', () => {
+				const basic = fixture('basic');
+
+				// Creates a test file
+				var xlsx = new NullXlsx('test.xlsx');
+				xlsx.addSheetFromData([['Title 1', 'Title 2'], ['Carl', 12.4], ['Mia', 678]]);
+
+				const spyGenerate = sinon.spy(xlsx, 'generate'),
+					link = xlsx.createDownloadLink('Download test.xlsx');
+
+				assert.calledOnce(spyGenerate);
+				assert.equal(link.download, 'test.xlsx');
+			});
+		});
+	}());
+	</script>
+</body></html>

@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+	<title>nullxlsx tests</title>
+	<script src="../../web-component-tester/browser.js"></script>
+</head>
+<body>
+	<script>
+		/* global WCT */
+		var pages = [
+				'basic.html'
+			],
+			suites = [],
+			i;
+
+		for (i = 0; i < pages.length; i++) {
+			suites.push(pages[i] + '?dom=shadow');
+			suites.push(pages[i] + '?wc-shadydom=true&wc-ce=true');
+		}
+		WCT.loadSuites(suites);
+	</script>
+</body></html>
