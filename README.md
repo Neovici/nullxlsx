@@ -1,6 +1,8 @@
 # NullXlsx
 
-
+[![Build Status](https://travis-ci.org/Neovici/nullxlsx.svg?branch=master)](https://travis-ci.org/Neovici/nullxlsx)
+[![Maintainability](https://api.codeclimate.com/v1/badges/64979759c180a78e9a77/maintainability)](https://codeclimate.com/github/Neovici/nullxlsx/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/64979759c180a78e9a77/test_coverage)](https://codeclimate.com/github/Neovici/nullxlsx/test_coverage)
 
 Minimal javascript library to create xlsx files and zip archives
 
@@ -42,11 +44,11 @@ nullxlsx.min.js | 10k (3.4k) | Both
 
 Currently this is a node module, only to get closure compiler neatly integrated. I seriously doubt this would work with "require"...
 
-To prepare, just clone then `npm install`.  
+To prepare, just clone then run `yarn`
 Edit the files in src/
 
-To compile run `node build.js`
+To compile run `yarn` again
 
 #### Tests
 
-No automatic tests yet, but check out the "demo" directory. All those pages should work. 
+To run tests locally, run `yarn test`
