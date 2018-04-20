@@ -29,6 +29,7 @@ class NullZipArchive {
 		this.lastDownloadBlobUrl = null;
 		this.createFolderEntries = !!createFolderEntries;
 		this.buffer = null;
+		this.mimeType = 'application/zip';
 
 		// Zip stores timestamps in two ints: one for time and one for date
 		var now = new Date();
@@ -168,7 +169,7 @@ class NullZipArchive {
 		if (!this.buffer) {
 			this.generate();
 		}
-		var downloadBlob = new Blob([this.buffer], { type: 'application/zip' });
+		const downloadBlob = new Blob([this.buffer], { type: this.mimeType });
 		if (this.lastDownloadBlobUrl) {
 			window.URL.revokeObjectURL(this.lastDownloadBlobUrl);
 		}
@@ -182,7 +183,7 @@ class NullZipArchive {
 		 * @return {!Element} Link object
 		 */
 	createDownloadLink(linkText) {
-		var link = linkText instanceof HTMLAnchorElement ? linkText : document.createElement('a');
+		const link = linkText instanceof HTMLAnchorElement ? linkText : document.createElement('a');
 		if (typeof linkText === 'string') {
 			link.innerHTML = linkText;
 		}

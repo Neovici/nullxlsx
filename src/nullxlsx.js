@@ -20,6 +20,7 @@ class NullXlsx {
 		this.autoFilter = !!(options && options['filter']);
 		this.buffer = null;
 		this.lastDownloadBlobUrl = null;
+		this.mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 	}
 
 	/**
@@ -129,39 +130,6 @@ class NullXlsx {
 	}
 
 	/**
-		 * Creates an ObjectURL blob containing the generated xlsx
-		 * @return {?string} ObjectURL to xlsx
-		 */
-	createDownloadUrl() {
-		if (!this.buffer) {
-			this.generate();
-		}
-		const downloadBlob = new Blob([this.buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-		if (this.lastDownloadBlobUrl) {
-			window.URL.revokeObjectURL(this.lastDownloadBlobUrl);
-		}
-		this.lastDownloadBlobUrl = URL.createObjectURL(downloadBlob);
-		return this.lastDownloadBlobUrl;
-	}
-
-	/** Create download <a> (or update existing)
-		* @param {(string|Element)} linkText Existing link object or text to set on new link
-		* @return {!Element} Link object */
-	createDownloadLink(linkText) {
-		const link = linkText instanceof HTMLAnchorElement ? linkText : document.createElement('a');
-		if (typeof linkText === 'string') {
-			link.innerHTML = linkText;
-		}
-		link.href = this.createDownloadUrl();
-		link.download = this.filename;
-		if (!link.hasChildNodes) {
-			link.innerText = this.filename;
-		}
-		trace('Link created for file ' + this.filename);
-		return link;
-	}
-
-	/**
 		 * Convert column number to Excel name ('A', 'BA' etc)
 		 * @private
 		 * @param {number} i Column number
@@ -191,3 +159,6 @@ class NullXlsx {
 		return 25569.0 + (date.getTime() - date.getTimezoneOffset() * 60 * 1000) / (1000 * 60 * 60 * 24);
 	}
 }
+
+NullXlsx.prototype.createDownloadLink = NullZipArchive.prototype.createDownloadLink;
+NullXlsx.prototype.createDownloadUrl = NullZipArchive.prototype.createDownloadUrl;
