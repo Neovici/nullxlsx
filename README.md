@@ -1,14 +1,14 @@
-# NullXlsx
+NullXlsx
+========
 
 [![Build Status](https://travis-ci.org/Neovici/nullxlsx.svg?branch=master)](https://travis-ci.org/Neovici/nullxlsx)
 [![Maintainability](https://api.codeclimate.com/v1/badges/64979759c180a78e9a77/maintainability)](https://codeclimate.com/github/Neovici/nullxlsx/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/64979759c180a78e9a77/test_coverage)](https://codeclimate.com/github/Neovici/nullxlsx/test_coverage)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/Neovici/nullxlsx)
 
-Minimal javascript library to create xlsx files and zip archives
+Minimal JavaScript library to create XLSX spreadsheet and ZIP archive files.
 
-No dependencies, focused on library size only.  
-Minimized it's 10k, 3K when zipped.
-
+No dependencies, focused on library size only. Weights 10k minimized, 3k zipped.
 
 ### Example usage
 
@@ -27,28 +27,27 @@ var xlsx = new NullXlsx('test.xlsx')
 document.body.appendChild(xlsx.createDownloadLink('Download test.xlsx'));
 ```
 
-
 ### Distributables
 The "dist" directory has three files:  
 
-
-
 File | Size (gz) |  Description
 --- | --- | ---
-nullzip.min.js | 4k (1.7k) | Only the zip archive creator
-nullxlsxonly.min.js | 9.9k (3.3k) | Only the xlsl file creator (the zip parts are in there but not exposed)
+nullzip.min.js | 4k (1.7k) | ZIP creator only
+nullxlsxonly.min.js | 9.9k (3.3k) | XLSX creator only (ZIP parts are there but not exposed)
 nullxlsx.min.js | 10k (3.4k) | Both
-
 
 ### Development
 
-Currently this is a node module, only to get closure compiler neatly integrated. I seriously doubt this would work with "require"...
+Currently this is a node module, only to get closure compiler neatly integrated.
 
-To prepare, just clone then run `yarn`
-Edit the files in src/
+There is a doubt that this works with "require".
 
-To compile run `yarn` again
+Make a clone and then run `yarn` to prepare.
+
+Edit the files in src/.
+
+Compile again by re-running `yarn`.
 
 #### Tests
 
-To run tests locally, run `yarn test`
+To run tests locally, run `yarn test`.
