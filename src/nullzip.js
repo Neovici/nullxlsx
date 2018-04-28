@@ -20,14 +20,12 @@ let crcTableEDB88320 = null;
 class NullZipArchive {
 	/**
 		 * Creates a new non-compressing zip archive
-		 * @param {string} filename File names. Must be ASCII
-		 * @param {boolean=} createFolderEntries If true a zip entry is made for each folder (subfolders should work without this)
+		 * @param {string} filename File names. Must be ASCIIfolder (subfolders should work without this)
 		 */
-	constructor(filename, createFolderEntries) {
+	constructor(filename) {
 		this.filename = filename;
 		this.files = [];
 		this.lastDownloadBlobUrl = null;
-		this.createFolderEntries = !!createFolderEntries;
 		this.buffer = null;
 		this.mimeType = 'application/zip';
 
@@ -76,23 +74,6 @@ class NullZipArchive {
 			filesDict[f.name] = f;
 		}
 
-		// Folders
-		let created = [];
-		if (this.createFolderEntries) { // apparently optional
-			const regx = /\//gi;
-			for (let f of this.files) {
-				let filename = f.name;
-				for (let result = regx.exec(filename); result !== null; result = regx.exec(filename)) {
-					const f = {name: filename.substr(0, result.index + 1), size: 0, crc: 0, data: new Uint8Array(0)};
-					if (typeof filesDict[f.name] === 'undefined') {
-						filesDict[f.name] = f;
-						created.push(f);
-					}
-				}
-			}
-		}
-		// Append folders to files array and sort it so folders always come before the files in them
-		Array.prototype.push.apply(this.files, created);
 		this.files.sort((a, b) => {
 			return a.name.length - b.name.length || a.name.localeCompare(b.name);
 		});
@@ -202,22 +183,30 @@ class NullZipArchive {
 		 * @return {number} CRC
 		 */
 	crc(u8arr) {
-		var c,
-			n,
-			z = 0 ^ -1;
-		if (!crcTableEDB88320) { // Cache CRC table
-			crcTableEDB88320 = [];
-			for (n = 0; n < 256; c = ++n) {
-				for (let k = 0; k < 8; k++) {
-					c = c & 1 ? 0xedb88320 ^ c >>> 1 : c >>> 1;
-				}
-				crcTableEDB88320[n] = c;
-			}
+		var z = 0 ^ -1;
+		if (!crcTableEDB88320) {
+			crcTableEDB88320 = this.crcTable();
 		}
 		for (let i = 0; i < u8arr.byteLength; i++) {
 			z = z >>> 8 ^ crcTableEDB88320[(z ^ u8arr[i]) & 0xFF];
 		}
 		return (z ^ -1) >>> 0;
+	}
+
+	/**
+		 * Creates a CRC table for the polynomial EDB88320
+		 * @return {Array<number>} CRC Table
+		 */
+	crcTable() {
+		var c,
+			table = [];
+		for (let n = 0; n < 256; c = ++n) {
+			for (let k = 0; k < 8; k++) {
+				c = c & 1 ? 0xedb88320 ^ c >>> 1 : c >>> 1;
+			}
+			table[n] = c;
+		}
+		return table;
 	}
 
 	/**

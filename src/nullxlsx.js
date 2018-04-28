@@ -42,7 +42,7 @@ class NullXlsx {
 	generate() {
 		let files = [],
 			f,
-			zip = new NullZipArchive(this.filename, false),
+			zip = new NullZipArchive(this.filename),
 			xmlh = '';
 
 		files.push(f = {name: 'xl/styles.xml'});
