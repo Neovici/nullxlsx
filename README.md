@@ -4,7 +4,7 @@ NullXlsx
 [![Build Status](https://travis-ci.org/Neovici/nullxlsx.svg?branch=master)](https://travis-ci.org/Neovici/nullxlsx)
 [![Maintainability](https://api.codeclimate.com/v1/badges/64979759c180a78e9a77/maintainability)](https://codeclimate.com/github/Neovici/nullxlsx/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/64979759c180a78e9a77/test_coverage)](https://codeclimate.com/github/Neovici/nullxlsx/test_coverage)
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/Neovici/nullxlsx)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-not_published-red.svg)](https://www.webcomponents.org/element/Neovici/nullxlsx)
 
 Minimal JavaScript library to create XLSX spreadsheet and ZIP archive files.
 
