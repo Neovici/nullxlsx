@@ -1,5 +1,7 @@
 window['NullXlsx'] = NullXlsx;
-NullXlsx.prototype['addSheetFromData'] = NullXlsx.prototype.addSheetFromData;
-NullXlsx.prototype['generate'] = NullXlsx.prototype.generate;
-NullXlsx.prototype['createDownloadUrl'] = NullXlsx.prototype.createDownloadUrl;
-NullXlsx.prototype['createDownloadLink'] = NullXlsx.prototype.createDownloadLink;
+const NullXlsxProto = NullXlsx.prototype;
+NullXlsxProto['createDownloadUrl'] = NullXlsxProto.createDownloadUrl;
+NullXlsxProto['createDownloadLink'] = NullXlsxProto.createDownloadLink;
+NullXlsxProto['generate'] = NullXlsxProto.generate;
+NullXlsxProto['addSheetFromData'] = NullXlsxProto.addSheetFromData;
+

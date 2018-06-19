@@ -1,35 +1,21 @@
-/* eslint no-use-before-define: off, no-unused-vars: off */
-/**
-	 * trace function was empty and redefined in demo but here does not complile with old code
-	 * let trace = trace || function(o){} error on yarn prepare: Illegal variable reference before declaration: trace
-
-	 * @param {string} o some log message
-	 * @returns {void}
-	 */
-var trace = function (o) {
-	if (o) {
-		console.log(o);
-	}
-};
+/* eslint no-unused-vars: off, no-use-before-define: off */
+/* global NullDownloader*/
 
 let crcTableEDB88320 = null;
 
 /**
  * A non-compressing zip archive
  */
-class NullZipArchive {
+class NullZipArchive extends NullDownloader {
 	/**
 		 * Creates a new non-compressing zip archive
 		 * @param {string} filename File names. Must be ASCII
 		 * @param {boolean=} createFolderEntries If true a zip entry is made for each folder (subfolders should work without this)
 		 */
 	constructor(filename, createFolderEntries) {
-		this.filename = filename;
+		super(filename, 'application/zip');
 		this.files = [];
-		this.lastDownloadBlobUrl = null;
 		this.createFolderEntries = !!createFolderEntries;
-		this.buffer = null;
-		this.mimeType = 'application/zip';
 
 		// Zip stores timestamps in two ints: one for time and one for date
 		var now = new Date();
@@ -159,41 +145,6 @@ class NullZipArchive {
 		trace('Finished creating zip. size=' + bw.i + ', predicted size=' + size);
 
 		return this.buffer;
-	}
-
-	/**
-		 * Creates an ObjectURL blob containing the generated xlsx
-		 * @return {string} ObjectURL to xlsx
-		 */
-	createDownloadUrl() {
-		if (!this.buffer) {
-			this.generate();
-		}
-		const downloadBlob = new Blob([this.buffer], { type: this.mimeType });
-		if (this.lastDownloadBlobUrl) {
-			window.URL.revokeObjectURL(this.lastDownloadBlobUrl);
-		}
-		this.lastDownloadBlobUrl = URL.createObjectURL(downloadBlob);
-		return this.lastDownloadBlobUrl;
-	}
-
-	/**
-		 * Create download link object (or update existing)
-		 * @param {(string|HTMLAnchorElement)} linkText Existing link object or text to set on new link
-		 * @return {!Element} Link object
-		 */
-	createDownloadLink(linkText) {
-		const link = linkText instanceof HTMLAnchorElement ? linkText : document.createElement('a');
-		if (typeof linkText === 'string') {
-			link.innerHTML = linkText;
-		}
-		link.href = this.createDownloadUrl();
-		link.download = this.filename;
-		if (!link.hasChildNodes) {
-			link.innerText = this.filename;
-		}
-		trace('Link created for file ' + this.filename);
-		return link;
 	}
 
 	/**

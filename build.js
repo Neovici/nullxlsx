@@ -42,17 +42,24 @@ new ClosureCompiler([
 	'--warning_level=VERBOSE',
 	'--jscomp_warning=lintChecks',
 	'--compilation_level=ADVANCED',
+	'--isolation_mode=IIFE',
+	'--js=src/trace.js',
+	'--js=src/nulldownloader.js',
 	'--js=src/nullzip.js',
 	'--js=src/nullxlsx.js',
 	'--js=exports/nullzip-exports.js',
 	'--js=exports/nullxlsx-exports.js',
 	'--js_output_file=dist/nullxlsx.min.js',
 	'--create_source_map=sourcemap/nullxlsx.min.js.map',
+	// '--formatting=pretty_print'
 ]).run(Report('nullxlsx'));
 
 new ClosureCompiler([
 	'--jscomp_warning=lintChecks',
 	'--compilation_level=ADVANCED',
+	'--isolation_mode=IIFE',
+	'--js=src/trace.js',
+	'--js=src/nulldownloader.js',
 	'--js=src/nullzip.js',
 	'--js=exports/nullzip-exports.js',
 	'--js_output_file=dist/nullzip.min.js',
@@ -62,6 +69,9 @@ new ClosureCompiler([
 new ClosureCompiler([
 	'--jscomp_warning=lintChecks',
 	'--compilation_level=ADVANCED',
+	'--isolation_mode=IIFE',
+	'--js=src/trace.js',
+	'--js=src/nulldownloader.js',
 	'--js=src/nullzip.js',
 	'--js=src/nullxlsx.js',
 	'--js=exports/nullxlsx-exports.js',

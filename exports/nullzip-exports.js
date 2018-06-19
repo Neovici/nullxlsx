@@ -1,6 +1,8 @@
 window['NullZipArchive'] = NullZipArchive;
-NullZipArchive.prototype['createDownloadLink'] = NullZipArchive.prototype.createDownloadLink;
-NullZipArchive.prototype['addFileFromString'] = NullZipArchive.prototype.addFileFromString;
-NullZipArchive.prototype['addFileFromUint8Array'] = NullZipArchive.prototype.addFileFromUint8Array;
-NullZipArchive.prototype['generate'] = NullZipArchive.prototype.generate;
-NullZipArchive.prototype['createDownloadUrl'] = NullZipArchive.prototype.createDownloadUrl;
+const NullZipProto = NullZipArchive.prototype;
+NullZipProto['createDownloadLink'] = NullZipProto.createDownloadLink;
+NullZipProto['createDownloadUrl'] = NullZipProto.createDownloadUrl;
+NullZipProto['generate'] = NullZipProto.generate;
+NullZipProto['addFileFromString'] = NullZipProto.addFileFromString;
+NullZipProto['addFileFromUint8Array'] = NullZipProto.addFileFromUint8Array;
+
