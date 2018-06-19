@@ -7,12 +7,14 @@
 		"bower_components"
 	],
 	"devDependencies": {
+		"iron-test-helpers": "PolymerElements/iron-test-helpers#1 - 2",
 		"web-component-tester": "^6.0.0",
 		"webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
 	},
 	"variants": {
 		"1.x": {
 			"devDependencies": {
+				"iron-test-helpers": "PolymerElements/iron-test-helpers#1 - 2",
 				"web-component-tester": "^4.0.0",
 				"webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
 			},
