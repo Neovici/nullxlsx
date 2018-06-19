@@ -16,33 +16,14 @@
 	<script src="../src/nullxlsx.js"></script>
 </head>
 <body>
-	<test-fixture id="basic">
-		<template>
-			<h3>Generate xlsx</h3>
-			<p id="traceout"></p>
-		</template>
-	</test-fixture>
-
 	<script>
-	/*global suite assert test fixture sinon chai */
+	/*global suite assert test sinon chai */
 	(function () {
 		'use strict';
 
 		sinon.assert.expose(chai.assert, { prefix: '' });
 		suite('basic', () => {
-
-			/* eslint no-unused-vars: off */
-			var traceout = document.getElementById('traceout'),
-				lastMark = performance.now(),
-				// tShow trace with timestamps
-				customTracingFunction = text => {
-					var mark = performance.now();
-					traceout.innerHTML += (mark - lastMark).toFixed(1) + 'ms : ' + text + '<br/>';
-				};
-
 			test('adds sheet from simple data', () => {
-				const basic = fixture('basic');
-
 				// Creates a test file
 				var xlsx = new NullXlsx('test.xlsx');
 				xlsx.addSheetFromData([['Title 1', 'Title 2'], ['Carl', 12.4], ['Mia', 678]]);
@@ -52,8 +33,6 @@
 			});
 
 			test('createDownloadLink calls generate', () => {
-				const basic = fixture('basic');
-
 				// Creates a test file
 				var xlsx = new NullXlsx('test.xlsx');
 				xlsx.addSheetFromData([['Title 1', 'Title 2'], ['Carl', 12.4], ['Mia', 678]]);
