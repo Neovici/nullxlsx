@@ -12,10 +12,7 @@
 
 	<link rel="import" href="../../test-fixture/test-fixture.html">
 	<link rel="import" href="../../iron-test-helpers/iron-test-helpers.html">
-	<script src="../src/trace.js"></script>
-	<script src="../src/nulldownloader.js"></script>
-	<script src="../src/nullzip.js"></script>
-	<script src="../src/nullxlsx.js"></script>
+	<link rel="import" href="../dist/import-nullxlsx.html">
 </head>
 <body>
 	<script>
@@ -24,24 +21,26 @@
 		'use strict';
 
 		sinon.assert.expose(chai.assert, { prefix: '' });
-		suite('basic', () => {
+		suite('imports', () => {
 			test('adds sheet from simple data', () => {
 				// Creates a test file
-				var xlsx = new NullXlsx('test.xlsx');
+				const xlsx = new NullXlsx('test.xlsx');
 				xlsx.addSheetFromData([['Title 1', 'Title 2'], ['Carl', 12.4], ['Mia', 678]]);
-				assert.deepEqual(xlsx.sheets[0].data[0], ['Title 1', 'Title 2']);
-				assert.deepEqual(xlsx.sheets[0].data[1], ['Carl', 12.4]);
-				assert.deepEqual(xlsx.sheets[0].data[2], ['Mia', 678]);
+				const sheets = Object.values(xlsx).find(v => Array.isArray(v) && v.length);
+				assert.deepEqual(sheets[0].data[0], ['Title 1', 'Title 2']);
+				assert.deepEqual(sheets[0].data[1], ['Carl', 12.4]);
+				assert.deepEqual(sheets[0].data[2], ['Mia', 678]);
 			});
 
 			test('createDownloadLink calls generate', () => {
-				// Creates a test file
-				var xlsx = new NullXlsx('test.xlsx');
+				const xlsx = new NullXlsx('test.xlsx');
+				const proto = Object.getPrototypeOf(xlsx);
+				const generateAlias = Object.getOwnPropertyNames(proto).
+					find(name => proto[name] === xlsx.generate && ['constructor', 'generate'].indexOf(name) < 0);
+
 				xlsx.addSheetFromData([['Title 1', 'Title 2'], ['Carl', 12.4], ['Mia', 678]]);
-
-				const spyGenerate = sinon.spy(xlsx, 'generate'),
+				const spyGenerate = sinon.spy(xlsx, generateAlias),
 					link = xlsx.createDownloadLink('Download test.xlsx');
-
 				assert.calledOnce(spyGenerate);
 				assert.equal(link.download, 'test.xlsx');
 			});
@@ -49,3 +48,4 @@
 	}());
 	</script>
 </body></html>
+

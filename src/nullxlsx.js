@@ -1,26 +1,18 @@
-/* eslint no-global-assign: off, no-unused-vars: off */
+/* eslint no-unused-vars: off */
+/* global NullDownloader*/
 
-trace = trace || function (o) {
-	if (o) {
-		console.log();
-	}
-};
-
-class NullXlsx {
+class NullXlsx extends NullDownloader {
 	/**
 		 * Creates a new xlsx file
 		 * @param {string} filename Name of file once generated
 		 * @param {Object} options Settings
 		 */
 	constructor(filename, options) {
-		this.filename = filename;
+		super(filename, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		/** @type {Array<{id:number, name:string, data:Array<Array<*>>}>} */
 		this.sheets = [];
 		this.frozen = !!(options && options['frozen']);
 		this.autoFilter = !!(options && options['filter']);
-		this.buffer = null;
-		this.lastDownloadBlobUrl = null;
-		this.mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 	}
 
 	/**
@@ -42,7 +34,7 @@ class NullXlsx {
 	generate() {
 		let files = [],
 			f,
-			zip = new NullZipArchive(this.filename, false),
+			zip = new NullZipArchive(this._filename, false),
 			xmlh = '';
 
 		files.push(f = {name: 'xl/styles.xml'});
@@ -160,5 +152,3 @@ class NullXlsx {
 	}
 }
 
-NullXlsx.prototype.createDownloadLink = NullZipArchive.prototype.createDownloadLink;
-NullXlsx.prototype.createDownloadUrl = NullZipArchive.prototype.createDownloadUrl;
