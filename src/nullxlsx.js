@@ -1,7 +1,8 @@
 /* eslint no-unused-vars: off */
-/* global NullDownloader*/
+import { NullDownloader } from './nulldownloader';
+import { NullZipArchive } from './nullzip';
 
-class NullXlsx extends NullDownloader {
+export class NullXlsx extends NullDownloader {
 	/**
 		 * Creates a new xlsx file
 		 * @param {string} filename Name of file once generated
@@ -151,4 +152,3 @@ class NullXlsx extends NullDownloader {
 		return 25569.0 + (date.getTime() - date.getTimezoneOffset() * 60 * 1000) / (1000 * 60 * 60 * 24);
 	}
 }
-

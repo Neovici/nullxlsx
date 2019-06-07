@@ -10,14 +10,11 @@
 	<script src="/components/wct-mocha/wct-mocha.js"></script>
 	<script src="/components/chai/chai.js"></script>
 	<script src="/components/sinon/pkg/sinon.js"></script>
-
-	<script src="../src/trace.js"></script>
-	<script src="../src/nulldownloader.js"></script>
-	<script src="../src/nullzip.js"></script>
-	<script src="../src/nullxlsx.js"></script>
 </head>
 <body>
 	<script type="module">
+		import { NullXlsx } from '../';
+
 		sinon.assert.expose(chai.assert, { prefix: '' });
 		suite('basic', () => {
 			test('adds sheet from simple data', () => {

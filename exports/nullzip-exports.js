@@ -1,3 +1,5 @@
+/* eslint-disable no-self-assign */
+import { NullZipArchive } from '../src/nullzip';
 window['NullZipArchive'] = NullZipArchive;
 const NullZipProto = NullZipArchive.prototype;
 NullZipProto['createDownloadLink'] = NullZipProto.createDownloadLink;

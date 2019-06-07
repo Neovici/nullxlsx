@@ -20,6 +20,9 @@
 	"plugins": [
 		"html"
 	],
+	"parserOptions": {
+		"sourceType": "module"
+	},
 	"rules": {
 		"accessor-pairs": "warn",
 		"array-bracket-spacing": [

@@ -42,11 +42,9 @@ new ClosureCompiler([
 	'--warning_level=VERBOSE',
 	'--jscomp_warning=lintChecks',
 	'--compilation_level=ADVANCED',
+	'--module_resolution=NODE',
 	'--output_wrapper=(function(){%output%}).call(window);',
-	'--js=src/trace.js',
-	'--js=src/nulldownloader.js',
-	'--js=src/nullzip.js',
-	'--js=src/nullxlsx.js',
+	'--js=src/**.js',
 	'--js=exports/nullzip-exports.js',
 	'--js=exports/nullxlsx-exports.js',
 	'--js_output_file=dist/nullxlsx.min.js',
@@ -57,6 +55,7 @@ new ClosureCompiler([
 new ClosureCompiler([
 	'--jscomp_warning=lintChecks',
 	'--compilation_level=ADVANCED',
+	'--module_resolution=NODE',
 	'--output_wrapper=(function(){%output%}).call(window);',
 	'--js=src/trace.js',
 	'--js=src/nulldownloader.js',
@@ -65,10 +64,11 @@ new ClosureCompiler([
 	'--js_output_file=dist/nullzip.min.js',
 	'--create_source_map=sourcemap/nullzip.min.js.map',
 ]).run(Report('nullzip'));
-
+//
 new ClosureCompiler([
 	'--jscomp_warning=lintChecks',
 	'--compilation_level=ADVANCED',
+	'--module_resolution=NODE',
 	'--output_wrapper=(function(){%output%}).call(window);',
 	'--js=src/trace.js',
 	'--js=src/nulldownloader.js',

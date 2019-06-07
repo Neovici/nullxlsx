@@ -1,12 +1,14 @@
 /* eslint no-unused-vars: off, no-use-before-define: off */
-/* global NullDownloader*/
+
+import { trace } from './trace';
+import { NullDownloader } from './nulldownloader';
 
 let crcTableEDB88320 = null;
 
 /**
  * A non-compressing zip archive
  */
-class NullZipArchive extends NullDownloader {
+export class NullZipArchive extends NullDownloader {
 	/**
 		 * Creates a new non-compressing zip archive
 		 * @param {string} filename File names. Must be ASCII
