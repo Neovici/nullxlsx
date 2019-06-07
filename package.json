@@ -2,34 +2,42 @@
 	"name": "nullxlsx",
 	"version": "1.0.0",
 	"description": "Minimal xlsx file and zip archive generator in javascript",
-	"main": "index.js",
-	"directories": {
-		"test": "test"
-	},
-	"dependencies": {
-		"google-closure-compiler": "^20180610.0.2"
-	},
-	"devDependencies": {
-		"eslint": "^4.10.0",
-		"eslint-plugin-html": "^4.0.3",
-		"eslint-plugin-mocha": "^5.0.0",
-		"polymer-cli": "^1.7.3",
-		"web-component-tester-istanbul": "Neovici/web-component-tester-istanbul#develop"
-	},
-	"scripts": {
-		"start": "polymer serve -o",
-		"postinstall": "polymer install --variants",
-		"test": "polymer test",
-		"prepare": "node build.js",
-		"lint": "eslint --cache --ext .js,.html ."
-	},
+	"keywords": [
+		"xlsx"
+	],
 	"repository": {
 		"type": "git",
 		"url": "https://git.github.com/Neovici/nullxlsx.git"
 	},
-	"keywords": [
-		"xlsx"
-	],
+	"license": "MIT",
 	"author": "jokedst@gmail.com",
-	"license": "MIT"
+	"main": "index.js",
+	"directories": {
+		"test": "test"
+	},
+	"scripts": {
+		"lint": "eslint --cache --ext .js,.html .",
+		"prepare": "node build.js",
+		"start": "polymer serve -o --npm",
+		"test": "polymer test --npm"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"chai": "^4.2.0",
+		"eslint": "^5.0.0",
+		"eslint-plugin-html": "^5.0.0",
+		"eslint-plugin-mocha": "^5.0.0",
+		"google-closure-compiler": "^20180610.0.2",
+		"mocha": "^5.0.0",
+		"polymer-cli": "^1.7.3",
+		"sinon": "^7.3.2",
+		"wct-istanbul": "^0.14.3",
+		"wct-mocha": "^1.0.1"
+	},
+	"resolutions": {
+		"inherits": "2.0.3",
+		"samsam": "1.1.3",
+		"supports-color": "3.1.2",
+		"type-detect": "1.0.0"
+	}
 }

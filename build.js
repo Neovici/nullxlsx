@@ -42,7 +42,7 @@ new ClosureCompiler([
 	'--warning_level=VERBOSE',
 	'--jscomp_warning=lintChecks',
 	'--compilation_level=ADVANCED',
-	'--isolation_mode=IIFE',
+	'--output_wrapper=(function(){%output%}).call(window);',
 	'--js=src/trace.js',
 	'--js=src/nulldownloader.js',
 	'--js=src/nullzip.js',
@@ -57,7 +57,7 @@ new ClosureCompiler([
 new ClosureCompiler([
 	'--jscomp_warning=lintChecks',
 	'--compilation_level=ADVANCED',
-	'--isolation_mode=IIFE',
+	'--output_wrapper=(function(){%output%}).call(window);',
 	'--js=src/trace.js',
 	'--js=src/nulldownloader.js',
 	'--js=src/nullzip.js',
@@ -69,7 +69,7 @@ new ClosureCompiler([
 new ClosureCompiler([
 	'--jscomp_warning=lintChecks',
 	'--compilation_level=ADVANCED',
-	'--isolation_mode=IIFE',
+	'--output_wrapper=(function(){%output%}).call(window);',
 	'--js=src/trace.js',
 	'--js=src/nulldownloader.js',
 	'--js=src/nullzip.js',

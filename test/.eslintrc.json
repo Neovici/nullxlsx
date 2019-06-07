@@ -1,0 +1,11 @@
+{
+  "env": {
+    "mocha": true
+  },
+  "plugins": ["mocha"],
+  "globals": {
+    "assert": "readonly",
+    "chai": "readonly",
+    "sinon": "readonly"
+  }
+}

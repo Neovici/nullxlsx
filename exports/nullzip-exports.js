@@ -5,4 +5,3 @@ NullZipProto['createDownloadUrl'] = NullZipProto.createDownloadUrl;
 NullZipProto['generate'] = NullZipProto.generate;
 NullZipProto['addFileFromString'] = NullZipProto.addFileFromString;
 NullZipProto['addFileFromUint8Array'] = NullZipProto.addFileFromUint8Array;
-
