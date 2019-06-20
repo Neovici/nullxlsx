@@ -10,7 +10,7 @@
 		import { NullXlsx } from '../';
 
 		// Creates a test file
-		var xlsx = new NullXlsx('test.xlsx');
+		let xlsx = new NullXlsx('test.xlsx');
 		xlsx.addSheetFromData([['Title 1', 'Title 2'], ['Carl', 12.4], ['Mia', 678, new Date(2017, 7 - 1, 10)], [new Date()]]);
 		document.body.appendChild(xlsx.createDownloadLink('Download test.xlsx'));
 
@@ -34,7 +34,7 @@
 		// Show the actual code on the page
 		document.body.innerHTML += '<h3>Code</h3>';
 
-		var p = document.createElement('pre');
+		const p = document.createElement('pre');
 		p.innerText = document.getElementById('exampleCode').innerHTML;
 		document.body.append(p);
 	</script>

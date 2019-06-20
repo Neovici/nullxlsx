@@ -1,4 +1,4 @@
-/* eslint no-unused-vars: off, no-use-before-define: off */
+/* eslint no-unused-vars: off, no-use-before-define: off, no-bitwise: off */
 
 import { trace } from './trace';
 import { NullDownloader } from './nulldownloader';
@@ -20,7 +20,7 @@ export class NullZipArchive extends NullDownloader {
 		this.createFolderEntries = !!createFolderEntries;
 
 		// Zip stores timestamps in two ints: one for time and one for date
-		var now = new Date();
+		const now = new Date();
 		this.timeInt = Math.round(now.getSeconds() / 2) | now.getMinutes() << 5 | now.getHours() << 11;
 		this.dateInt = now.getFullYear() - 1980 << 9 | now.getMonth() + 1 << 5 | now.getDate();
 	}
@@ -32,7 +32,7 @@ export class NullZipArchive extends NullDownloader {
 		 * @return {NullZipArchive} Returns itself for method chaining
 		 */
 	addFileFromString(filename, content) {
-		var binaryContent = (new TextEncoder('utf-8')).encode(content);
+		const binaryContent = (new TextEncoder('utf-8')).encode(content);
 		this.addFileFromUint8Array(filename, binaryContent);
 		return this;
 	}
@@ -45,7 +45,7 @@ export class NullZipArchive extends NullDownloader {
 		 */
 	addFileFromUint8Array(filename, binaryContent) {
 		if (!(binaryContent instanceof Uint8Array)) {
-			throw 'invalid parameter';
+			throw new Error('invalid parameter');
 		}
 		this.files.push({name: filename.replace('\\', '/'), data: binaryContent});
 		return this;
@@ -55,21 +55,21 @@ export class NullZipArchive extends NullDownloader {
 		 * Generate a zip archive
 		 * @return {ArrayBuffer} Array buffer containing the zip archive
 		 */
-	generate() {
+	generate() { // eslint-disable-line max-lines-per-function, max-statements
 		trace('NullZip archive generation started');
-		var filesDict = {};
-		for (let f of this.files) {
+		const filesDict = {};
+		for (const f of this.files) {
 			f.size = f.data ? f.data.byteLength : 0;
 			f.crc = f.data ? this.crc(f.data) : 0;
 			filesDict[f.name] = f;
 		}
 
 		// Folders
-		let created = [];
+		const created = [];
 		if (this.createFolderEntries) { // apparently optional
-			const regx = /\//gi;
-			for (let f of this.files) {
-				let filename = f.name;
+			const regx = /\//giu;
+			for (const f of this.files) {
+				const filename = f.name;
 				for (let result = regx.exec(filename); result !== null; result = regx.exec(filename)) {
 					const f = {name: filename.substr(0, result.index + 1), size: 0, crc: 0, data: new Uint8Array(0)};
 					if (typeof filesDict[f.name] === 'undefined') {
@@ -98,7 +98,7 @@ export class NullZipArchive extends NullDownloader {
 			// Prepare file block header. We set same date/time on all (=now)
 			dirFileHeader = this.hex2u8a('504b0304140000000000');
 
-		for (let f of this.files) {
+		for (const f of this.files) {
 			f.offs = bw.i;
 			bw.writeByteArray(dirFileHeader);
 			bw.uint16(this.timeInt);
@@ -118,7 +118,7 @@ export class NullZipArchive extends NullDownloader {
 		// Central Directory
 		const cdStart = bw.i,
 			cdHeader = this.hex2u8a('504b01023f00140000000000');
-		for (let f of this.files) {
+		for (const f of this.files) {
 			bw.writeByteArray(cdHeader);
 			bw.uint16(this.timeInt);
 			bw.uint16(this.dateInt);
@@ -155,7 +155,7 @@ export class NullZipArchive extends NullDownloader {
 		 * @return {number} CRC
 		 */
 	crc(u8arr) {
-		var c,
+		let c,
 			n,
 			z = 0 ^ -1;
 		if (!crcTableEDB88320) { // Cache CRC table
@@ -179,7 +179,7 @@ export class NullZipArchive extends NullDownloader {
 		 * @return {Uint8Array} Array buffer with converted data
 		 */
 	hex2u8a(string) {
-		var bytes = new Uint8Array(Math.ceil(string.length / 2));
+		const bytes = new Uint8Array(Math.ceil(string.length / 2));
 		for (let i = 0; i < bytes.length; i++) {
 			bytes[i] = parseInt(string.substr(i * 2, 2), 16);
 		}
@@ -238,7 +238,7 @@ class BinaryWriter {
 		 */
 	writeByteArray(byteArray) {
 		if (!(byteArray instanceof Uint8Array)) {
-			throw 'invalid parameter';
+			throw new Error('invalid parameter');
 		}
 		new Uint8Array(this.dw.buffer).set(byteArray, this.i);
 		this.i += byteArray.byteLength;
@@ -250,7 +250,7 @@ class BinaryWriter {
 		 * @returns {void}
 		 */
 	writeASCII(string) {
-		for (var i = 0; i < string.length; i++) {
+		for (let i = 0; i < string.length; i++) {
 			this.dw.setUint8(this.i++, string.charCodeAt(i) & 0xFF);
 		}
 	}

@@ -1,4 +1,4 @@
-/* eslint no-unused-vars: off */
+/* eslint no-unused-vars: off, max-len: off */
 import { NullDownloader } from './nulldownloader';
 import { NullZipArchive } from './nullzip';
 
@@ -23,8 +23,8 @@ export class NullXlsx extends NullDownloader {
 		 * @return {NullXlsx} Returns itself for method chaining
 		 */
 	addSheetFromData(data, name) {
-		let i = this.sheets.length + 1;
-		this.sheets.push({ id: i, name: this.escapeXml(name || 'Sheet' + i), data: data });
+		const i = this.sheets.length + 1;
+		this.sheets.push({ id: i, name: this.escapeXml(name || 'Sheet' + i), data });
 		return this;
 	}
 
@@ -32,11 +32,12 @@ export class NullXlsx extends NullDownloader {
 		 * Generates the xlsx file
 		 * @return {ArrayBuffer} Array buffer containing the xlsx
 		 */
-	generate() {
-		let files = [],
-			f,
+	generate() { // eslint-disable-line max-lines-per-function, max-statements
+		const files = [],
 			zip = new NullZipArchive(this._filename, false),
 			xmlh = '';
+
+		let f;
 
 		files.push(f = {name: 'xl/styles.xml'});
 		f.xml = xmlh + '<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">'
@@ -78,7 +79,7 @@ export class NullXlsx extends NullDownloader {
 		files.push(f = {name: '_rels/.rels'});
 		f.xml = xmlh + '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>';
 
-		for (let x of this.sheets) {
+		for (const x of this.sheets) {
 			let maxLength = 0;
 			files.push(f = { name: `xl/worksheets/sheet${x.id}.xml` });
 			f.xml = xmlh + '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"'
@@ -98,7 +99,7 @@ export class NullXlsx extends NullDownloader {
 					if (typeof value === 'number') {
 						f.xml += `<c r="${cellName}"${style}><v>${value}</v></c>`;
 					} else if (value instanceof Date) {
-						let dateStyle = value.getHours() || value.getMinutes() || value.getSeconds() ? 3 : 2;
+						const dateStyle = value.getHours() || value.getMinutes() || value.getSeconds() ? 3 : 2;
 						f.xml += `<c s="${dateStyle}"><v>${this.dateToExcelDate(value)}</v></c>`;
 					} else {
 						f.xml += `<c t="inlineStr"${style}><is><t>${this.escapeXml(value.toString())}</t></is></c>`;
@@ -138,7 +139,7 @@ export class NullXlsx extends NullDownloader {
 		 * @return {string} Escaped string
 		 */
 	escapeXml(unsafe) {
-		return unsafe.replace(/[<>&'"]/g, c => {
+		return unsafe.replace(/[<>&'"]/gu, c => {
 			return ['&lt;', '&gt;', '&amp;', '&apos;', '&quot;']['<>&\'"'.indexOf(c)];
 		});
 	}

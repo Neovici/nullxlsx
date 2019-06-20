@@ -1,11 +1,3 @@
 {
-  "env": {
-    "mocha": true
-  },
-  "plugins": ["mocha"],
-  "globals": {
-    "assert": "readonly",
-    "chai": "readonly",
-    "sinon": "readonly"
-  }
+	"extends": "@neovici/eslint-config/test-config"
 }

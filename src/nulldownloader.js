@@ -24,7 +24,7 @@ export class NullDownloader {
 	* @abstract
 	* @return {ArrayBuffer}  A buffer to download
 	* */
-	generate() {/* */}
+	generate() { /* */ }
 
 	/**
 	 * Creates an ObjectURL blob containing the generated xlsx
