@@ -17,7 +17,6 @@
 	},
 	"scripts": {
 		"lint": "eslint --cache --ext .js,.html .",
-		"prepare": "node build.js",
 		"start": "polymer serve -o --npm",
 		"test": "polymer test --npm"
 	},
@@ -27,7 +26,6 @@
 		"eslint": "^5.0.0",
 		"eslint-plugin-html": "^5.0.0",
 		"eslint-plugin-mocha": "^5.0.0",
-		"google-closure-compiler": "^20180610.0.2",
 		"mocha": "^5.0.0",
 		"polymer-cli": "^1.7.3",
 		"sinon": "^7.3.2",
