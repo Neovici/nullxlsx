@@ -6,28 +6,20 @@
 
 	<title>nullxlsx test</title>
 
-	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-	<script src="../../web-component-tester/browser.js"></script>
-	<script src="../../test-fixture/test-fixture-mocha.js"></script>
-
-	<link rel="import" href="../../test-fixture/test-fixture.html">
-	<link rel="import" href="../../iron-test-helpers/iron-test-helpers.html">
-	<script src="../src/trace.js"></script>
-	<script src="../src/nulldownloader.js"></script>
-	<script src="../src/nullzip.js"></script>
-	<script src="../src/nullxlsx.js"></script>
+	<script src="/components/mocha/mocha.js"></script>
+	<script src="/components/wct-mocha/wct-mocha.js"></script>
+	<script src="/components/chai/chai.js"></script>
+	<script src="/components/sinon/pkg/sinon.js"></script>
 </head>
 <body>
-	<script>
-	/*global suite assert test sinon chai */
-	(function () {
-		'use strict';
+	<script type="module">
+		import { NullXlsx } from '../';
 
 		sinon.assert.expose(chai.assert, { prefix: '' });
 		suite('basic', () => {
 			test('adds sheet from simple data', () => {
 				// Creates a test file
-				var xlsx = new NullXlsx('test.xlsx');
+				const xlsx = new NullXlsx('test.xlsx');
 				xlsx.addSheetFromData([['Title 1', 'Title 2'], ['Carl', 12.4], ['Mia', 678]]);
 				assert.deepEqual(xlsx.sheets[0].data[0], ['Title 1', 'Title 2']);
 				assert.deepEqual(xlsx.sheets[0].data[1], ['Carl', 12.4]);
@@ -36,7 +28,7 @@
 
 			test('createDownloadLink calls generate', () => {
 				// Creates a test file
-				var xlsx = new NullXlsx('test.xlsx');
+				const xlsx = new NullXlsx('test.xlsx');
 				xlsx.addSheetFromData([['Title 1', 'Title 2'], ['Carl', 12.4], ['Mia', 678]]);
 
 				const spyGenerate = sinon.spy(xlsx, 'generate'),
@@ -46,6 +38,5 @@
 				assert.equal(link.download, 'test.xlsx');
 			});
 		});
-	}());
 	</script>
 </body></html>

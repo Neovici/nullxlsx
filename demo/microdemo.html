@@ -1,12 +1,13 @@
-<script src="../dist/nullxlsx.min.js"></script>
 Example
-<script>
+<script type="module">
+	import { NullXlsx } from '../';
+
 	// Data should be array of array
-	const data = [['Title 1', 'Title 2'],
+	const data = [
+			['Title 1', 'Title 2'],
 			['Carl', 12.4, new Date(2017, 7 - 1, 10)],
 			['Mia', 678, new Date()]
 		],
-
 		// Create xlsl
 		xlsx = new NullXlsx('test.xlsx')
 			.addSheetFromData(data, 'Sheet name');

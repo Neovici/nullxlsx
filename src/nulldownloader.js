@@ -1,10 +1,12 @@
 /* eslint no-global-assign: off, no-unused-vars: off */
 
+import { trace } from './trace';
+
 /**
  * @abstract
  * @unrestricted
  */
-class NullDownloader {
+export class NullDownloader {
 	/**
 	* Creates a new  downloader
 	* @param {string} filename Name of file once generated
@@ -22,7 +24,7 @@ class NullDownloader {
 	* @abstract
 	* @return {ArrayBuffer}  A buffer to download
 	* */
-	generate() {/* */}
+	generate() { /* */ }
 
 	/**
 	 * Creates an ObjectURL blob containing the generated xlsx

@@ -1,29 +1,16 @@
 <html>
 <head>
 	<title>Test original xlsx</title>
-	<script src="../src/nullzip.js"></script>
-	<script src="../src/nullxlsx.js"></script>
 </head>
 <body>
 	<h3>Generate xlsx</h3>
 	<p id="traceout"></p>
-	<script>
-		/* eslint no-unused-vars: off */
-		var traceout = document.getElementById('traceout'),
-			lastMark = performance.now();
-		// tShow trace with timestamps
-		function customTracingFunction(text) {
-			var mark = performance.now();
-			traceout.innerHTML += (mark - lastMark).toFixed(1) + 'ms : ' + text + '<br/>';
-		}
-	</script>
-	<script id="exampleCode">
+	<script id="exampleCode" type="module">
 		/* eslint no-global-assign: off, no-undef: off */
-		// Replacing trace output for testing (not available in minified code)
-		trace = customTracingFunction;
+		import { NullXlsx } from '../';
 
 		// Creates a test file
-		var xlsx = new NullXlsx('test.xlsx');
+		let xlsx = new NullXlsx('test.xlsx');
 		xlsx.addSheetFromData([['Title 1', 'Title 2'], ['Carl', 12.4], ['Mia', 678, new Date(2017, 7 - 1, 10)], [new Date()]]);
 		document.body.appendChild(xlsx.createDownloadLink('Download test.xlsx'));
 
@@ -42,14 +29,12 @@
 				.addSheetFromData([['Who', 'Why', 'When'], ['Carl', 12.4, new Date()], ['Mia', 678, new Date()]], 'People')
 				.addSheetFromData([['What', 'Where'], ['Car', 'Garage'], ['Plane', 'Air']], 'Items')
 				.createDownloadLink('Download xlsx with multiple sheets'));
-
-		trace('All done!');
 	</script>
 	<script>
 		// Show the actual code on the page
 		document.body.innerHTML += '<h3>Code</h3>';
 
-		var p = document.createElement('pre');
+		const p = document.createElement('pre');
 		p.innerText = document.getElementById('exampleCode').innerHTML;
 		document.body.append(p);
 	</script>

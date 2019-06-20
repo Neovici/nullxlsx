@@ -4,7 +4,7 @@
  * @param {string} o some log message
  * @returns {void}
  */
-var trace = function (o) {
+export const trace = function (o) {
 	if (o) {
 		console.log(o);
 	}

@@ -1,16 +1,17 @@
 {
-	"plugins": {
-		"local": {
-			"browsers": ["chrome", "firefox"]
-		},
-		"istanbul": {
-			"dir": "./coverage",
-			"reporters": ["text-summary", "lcov"],
-			"include": [
-				"src/nullxlsx.js",
-				"src/nullzip.js"
-			],
-			"exclude": []
-		}
-	}
+  "plugins": {
+    "local": {
+      "browsers": ["chrome", "firefox"],
+      "browserOptions": {
+        "chrome": ["headless", "disable-gpu", "no-sandbox"],
+        "firefox": ["--headless"]
+      }
+    },
+    "istanbul": {
+      "dir": "./coverage",
+      "reporters": ["text-summary", "lcov"],
+      "include": ["**/src/null*.js"],
+      "exclude": []
+    }
+  }
 }
