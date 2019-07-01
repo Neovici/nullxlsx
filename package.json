@@ -1,6 +1,6 @@
 {
-	"name": "nullxlsx",
-	"version": "1.0.0",
+	"name": "@neovici/nullxlsx",
+	"version": "3.0.0",
 	"description": "Minimal xlsx file and zip archive generator in javascript",
 	"keywords": [
 		"xlsx"
@@ -17,12 +17,14 @@
 	},
 	"scripts": {
 		"lint": "eslint --cache --ext .js,.html .",
+		"preversion": "npm run lint",
+		"postversion": "git push && git push --tags",
 		"start": "polymer serve -o --npm",
 		"test": "polymer test --npm"
 	},
 	"dependencies": {},
 	"devDependencies": {
-		"@neovici/eslint-config": "neovici/eslint-config#semver:^1.0.0",
+		"@neovici/eslint-config": "github:neovici/eslint-config#semver:^1.0.0",
 		"babel-eslint": "^10.0.2",
 		"chai": "^4.2.0",
 		"eslint": "^5.0.0",
