@@ -1,6 +1,6 @@
 {
 	"name": "@neovici/nullxlsx",
-	"version": "3.0.0",
+	"version": "3.0.1",
 	"description": "Minimal xlsx file and zip archive generator in javascript",
 	"keywords": [
 		"xlsx"
