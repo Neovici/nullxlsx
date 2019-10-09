@@ -17,8 +17,6 @@
 	},
 	"scripts": {
 		"lint": "eslint --cache --ext .js,.html .",
-		"preversion": "npm run lint",
-		"postversion": "git push && git push --tags",
 		"start": "polymer serve -o --npm",
 		"test": "polymer test --npm"
 	},
