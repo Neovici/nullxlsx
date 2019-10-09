@@ -22,17 +22,48 @@
 		"start": "polymer serve -o --npm",
 		"test": "polymer test --npm"
 	},
+	"release": {
+		"plugins": [
+			"@semantic-release/commit-analyzer",
+			"@semantic-release/release-notes-generator",
+			"@semantic-release/changelog",
+			"@semantic-release/github",
+			"@semantic-release/npm",
+			"@semantic-release/git"
+		],
+		"branch": "master"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"commitlint": {
+		"extends": [
+			"@commitlint/config-conventional"
+		]
+	},
+	"husky": {
+		"hooks": {
+			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+		}
+	},
 	"dependencies": {},
 	"devDependencies": {
-		"@neovici/eslint-config": "github:neovici/eslint-config#semver:^1.0.0",
+		"@commitlint/cli": "^8.2.0",
+		"@commitlint/config-conventional": "^8.2.0",
+		"@neovici/eslint-config": "^1.1.7",
+		"@neovici/github-actions-eslint-annotator": "^0.2.0",
+		"@semantic-release/changelog": "^3.0.4",
+		"@semantic-release/git": "^7.0.16",
 		"babel-eslint": "^10.0.2",
 		"chai": "^4.2.0",
 		"eslint": "^5.0.0",
 		"eslint-plugin-html": "^5.0.0",
 		"eslint-plugin-import": "^2.17.3",
 		"eslint-plugin-mocha": "^5.0.0",
-		"mocha": "^5.0.0",
-		"polymer-cli": "^1.7.3",
+		"husky": "^3.0.8",
+		"mocha": "^6.2.1",
+		"polymer-cli": "^1.9.11",
+		"semantic-release": "^16.0.0-beta.25",
 		"sinon": "^7.3.2",
 		"wct-istanbul": "^0.14.3",
 		"wct-mocha": "^1.0.1"

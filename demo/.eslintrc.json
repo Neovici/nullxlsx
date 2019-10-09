@@ -5,6 +5,7 @@
 		"no-throw-literal": "off",
 		"max-lines-per-function": "off",
 		"max-statements": "off",
-		"no-bitwise": "off"
+		"no-bitwise": "off",
+		"no-console": "off"
 	}
 }

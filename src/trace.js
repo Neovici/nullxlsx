@@ -6,6 +6,7 @@
  */
 export const trace = function (o) {
 	if (o) {
+		// eslint-disable-next-line no-console
 		console.log(o);
 	}
 };

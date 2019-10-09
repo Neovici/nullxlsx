@@ -1,10 +1,11 @@
 NullXlsx
 ========
 
-[![Build Status](https://travis-ci.org/Neovici/nullxlsx.svg?branch=master)](https://travis-ci.org/Neovici/nullxlsx)
+[![Build Status](https://github.com/Neovici/nullxlsx/workflows/Github%20CI/badge.svg)](https://github.com/Neovici/nullxlsx/actions?workflow=Github+CI)
 [![Maintainability](https://api.codeclimate.com/v1/badges/64979759c180a78e9a77/maintainability)](https://codeclimate.com/github/Neovici/nullxlsx/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/64979759c180a78e9a77/test_coverage)](https://codeclimate.com/github/Neovici/nullxlsx/test_coverage)
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-red.svg)](https://www.webcomponents.org/element/Neovici/nullxlsx)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 Minimal JavaScript library to create XLSX spreadsheet and ZIP archive files.
 
@@ -14,8 +15,8 @@ No dependencies, focused on library size only. Weights 10k minimized, 3k zipped.
 
 ```javascript
 // Data should be array of arrays
-var data = [['Title 1', 'Title 2'], 
-	['Carl', 12.4, new Date(2017, 7 - 1, 10)], 
+var data = [['Title 1', 'Title 2'],
+	['Carl', 12.4, new Date(2017, 7 - 1, 10)],
 	['Mia', 678, new Date()]
 ];
 
@@ -28,7 +29,7 @@ document.body.appendChild(xlsx.createDownloadLink('Download test.xlsx'));
 ```
 
 ### Distributables
-The "dist" directory has three files:  
+The "dist" directory has three files:
 
 File | Size (gz) |  Description
 --- | --- | ---
