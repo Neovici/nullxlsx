@@ -17,9 +17,8 @@
 	import {NullZipArchive} from '../';
 
 
-	const trace = console.log;
-
-	const maxDataToShow = 16;
+	const trace = console.log,
+		maxDataToShow = 16;
 
 	// show buffer as hex, cut off if too long
 	function u8a2hex(u8arr, maxLength = u8arr.length) {
@@ -38,10 +37,9 @@
 	}
 
 	function handleFileSelect(evt) {
-		const files = evt.target.files; // FileList object
-
-		// files is a FileList of File objects. List some properties.
-		const output = [];
+		const files = evt.target.files, // FileList object
+			// files is a FileList of File objects. List some properties.
+			output = [];
 		for (let i = 0, f; files[i]; i++) {
 			f = files[i];
 			output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
