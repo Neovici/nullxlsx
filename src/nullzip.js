@@ -10,10 +10,10 @@ let crcTableEDB88320 = null;
  */
 export class NullZipArchive extends NullDownloader {
 	/**
-		 * Creates a new non-compressing zip archive
-		 * @param {string} filename File names. Must be ASCII
-		 * @param {boolean=} createFolderEntries If true a zip entry is made for each folder (subfolders should work without this)
-		 */
+	 * Creates a new non-compressing zip archive
+	 * @param {string} filename File names. Must be ASCII
+	 * @param {boolean=} createFolderEntries If true a zip entry is made for each folder (subfolders should work without this)
+	 */
 	constructor(filename, createFolderEntries) {
 		super(filename, 'application/zip');
 		this.files = [];
@@ -26,35 +26,38 @@ export class NullZipArchive extends NullDownloader {
 	}
 
 	/**
-		 * Add a text file to the archive, specifying the text
-		 * @param {string} filename File name, including directory path (e.g. subdir/text.txt)
-		 * @param {string} content File contents
-		 * @return {NullZipArchive} Returns itself for method chaining
-		 */
+	 * Add a text file to the archive, specifying the text
+	 * @param {string} filename File name, including directory path (e.g. subdir/text.txt)
+	 * @param {string} content File contents
+	 * @return {NullZipArchive} Returns itself for method chaining
+	 */
 	addFileFromString(filename, content) {
-		const binaryContent = (new TextEncoder('utf-8')).encode(content);
+		const binaryContent = new TextEncoder('utf-8').encode(content);
 		this.addFileFromUint8Array(filename, binaryContent);
 		return this;
 	}
 
 	/**
-		 * Add a file to the archive, using an array buffer as source data
-		 * @param {string} filename File name, including directory path (e.g. subdir/text.txt)
-		 * @param {Uint8Array} binaryContent Array buffer
-		 * @return {NullZipArchive} Returns itself for method chaining
-		 */
+	 * Add a file to the archive, using an array buffer as source data
+	 * @param {string} filename File name, including directory path (e.g. subdir/text.txt)
+	 * @param {Uint8Array} binaryContent Array buffer
+	 * @return {NullZipArchive} Returns itself for method chaining
+	 */
 	addFileFromUint8Array(filename, binaryContent) {
 		if (!(binaryContent instanceof Uint8Array)) {
 			throw new Error('invalid parameter');
 		}
-		this.files.push({name: filename.replace('\\', '/'), data: binaryContent});
+		this.files.push({
+			name: filename.replace('\\', '/'),
+			data: binaryContent
+		});
 		return this;
 	}
 
 	/**
-		 * Generate a zip archive
-		 * @return {ArrayBuffer} Array buffer containing the zip archive
-		 */
+	 * Generate a zip archive
+	 * @return {ArrayBuffer} Array buffer containing the zip archive
+	 */
 	generate() { // eslint-disable-line max-lines-per-function, max-statements
 		trace('NullZip archive generation started');
 		const filesDict = {};
@@ -71,7 +74,12 @@ export class NullZipArchive extends NullDownloader {
 			for (const f of this.files) {
 				const filename = f.name;
 				for (let result = regx.exec(filename); result !== null; result = regx.exec(filename)) {
-					const f = {name: filename.substr(0, result.index + 1), size: 0, crc: 0, data: new Uint8Array(0)};
+					const f = {
+						name: filename.substr(0, result.index + 1),
+						size: 0,
+						crc: 0,
+						data: new Uint8Array(0)
+					};
 					if (typeof filesDict[f.name] === 'undefined') {
 						filesDict[f.name] = f;
 						created.push(f);
@@ -150,10 +158,10 @@ export class NullZipArchive extends NullDownloader {
 	}
 
 	/**
-		 * Calculates CRC
-		 * @param {Uint8Array} u8arr Array buffer with data
-		 * @return {number} CRC
-		 */
+	 * Calculates CRC
+	 * @param {Uint8Array} u8arr Array buffer with data
+	 * @return {number} CRC
+	 */
 	crc(u8arr) {
 		let c,
 			n,
@@ -174,10 +182,10 @@ export class NullZipArchive extends NullDownloader {
 	}
 
 	/**
-		 * Parse hexadecimal string into an array buffer
-		 * @param {string} string Hexadecimal string
-		 * @return {Uint8Array} Array buffer with converted data
-		 */
+	 * Parse hexadecimal string into an array buffer
+	 * @param {string} string Hexadecimal string
+	 * @return {Uint8Array} Array buffer with converted data
+	 */
 	hex2u8a(string) {
 		const bytes = new Uint8Array(Math.ceil(string.length / 2));
 		for (let i = 0; i < bytes.length; i++) {
@@ -192,9 +200,9 @@ export class NullZipArchive extends NullDownloader {
  */
 class BinaryWriter {
 	/**
-		 * Create helper to write to an array buffer
-		 * @param {ArrayBuffer} buffer Array buffer to write to
-		 */
+	 * Create helper to write to an array buffer
+	 * @param {ArrayBuffer} buffer Array buffer to write to
+	 */
 	constructor(buffer) {
 		this.dw = new DataView(buffer);
 		this.i = 0;
@@ -203,39 +211,39 @@ class BinaryWriter {
 	}
 
 	/**
-		 * Write unsigned 8-bit integer
-		 * @param {number} v Number to write
-		 * @returns {void}
-		 */
+	 * Write unsigned 8-bit integer
+	 * @param {number} v Number to write
+	 * @returns {void}
+	 */
 	uint8(v) {
 		this.dw.setUint8(this.i++, v);
 	}
 
 	/**
-		 * Write unsigned 16-bit integer
-		 * @param {number} v Number to write
-		 * @returns {void}
-		 */
+	 * Write unsigned 16-bit integer
+	 * @param {number} v Number to write
+	 * @returns {void}
+	 */
 	uint16(v) {
 		this.dw.setUint16(this.i, v, this.le);
 		this.i += 2;
 	}
 
 	/**
-		 * Write unsigned 32-bit integer
-		 * @param {number} v Number to write
-		 * @returns {void}
-		 */
+	 * Write unsigned 32-bit integer
+	 * @param {number} v Number to write
+	 * @returns {void}
+	 */
 	uint32(v) {
 		this.dw.setUint32(this.i, v, this.le);
 		this.i += 4;
 	}
 
 	/**
-		 * Add array buffer
-		 * @param {Uint8Array} byteArray Data to write
-		 * @returns {void}
-		 */
+	 * Add array buffer
+	 * @param {Uint8Array} byteArray Data to write
+	 * @returns {void}
+	 */
 	writeByteArray(byteArray) {
 		if (!(byteArray instanceof Uint8Array)) {
 			throw new Error('invalid parameter');
@@ -245,10 +253,10 @@ class BinaryWriter {
 	}
 
 	/**
-		 * Add string
-		 * @param {string} string String to write
-		 * @returns {void}
-		 */
+	 * Add string
+	 * @param {string} string String to write
+	 * @returns {void}
+	 */
 	writeASCII(string) {
 		for (let i = 0; i < string.length; i++) {
 			this.dw.setUint8(this.i++, string.charCodeAt(i) & 0xFF);

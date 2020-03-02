@@ -1,4 +1,4 @@
-/* eslint no-global-assign: off, no-unused-vars: off */
+/* eslint no-global-assign: off */
 
 /**
  * @param {string} o some log message

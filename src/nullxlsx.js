@@ -4,10 +4,10 @@ import { NullZipArchive } from './nullzip';
 
 export class NullXlsx extends NullDownloader {
 	/**
-		 * Creates a new xlsx file
-		 * @param {string} filename Name of file once generated
-		 * @param {Object} options Settings
-		 */
+	 * Creates a new xlsx file
+	 * @param {string} filename Name of file once generated
+	 * @param {Object} options Settings
+	 */
 	constructor(filename, options) {
 		super(filename, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		/** @type {Array<{id:number, name:string, data:Array<Array<*>>}>} */
@@ -17,21 +17,25 @@ export class NullXlsx extends NullDownloader {
 	}
 
 	/**
-		 * Create a spreadsheet from an array of arrays of data
-		 * @param {Array<Array<*>>} data Cell values
-		 * @param {string} name Name of sheet
-		 * @return {NullXlsx} Returns itself for method chaining
-		 */
+	 * Create a spreadsheet from an array of arrays of data
+	 * @param {Array<Array<*>>} data Cell values
+	 * @param {string} name Name of sheet
+	 * @return {NullXlsx} Returns itself for method chaining
+	 */
 	addSheetFromData(data, name) {
 		const i = this.sheets.length + 1;
-		this.sheets.push({ id: i, name: this.escapeXml(name || 'Sheet' + i), data });
+		this.sheets.push({
+			id: i,
+			name: this.escapeXml(name || 'Sheet' + i),
+			data
+		});
 		return this;
 	}
 
 	/**
-		 * Generates the xlsx file
-		 * @return {ArrayBuffer} Array buffer containing the xlsx
-		 */
+	 * Generates the xlsx file
+	 * @return {ArrayBuffer} Array buffer containing the xlsx
+	 */
 	generate() { // eslint-disable-line max-lines-per-function, max-statements
 		const files = [],
 			zip = new NullZipArchive(this._filename, false),
@@ -39,7 +43,7 @@ export class NullXlsx extends NullDownloader {
 
 		let f;
 
-		files.push(f = {name: 'xl/styles.xml'});
+		files.push(f = { name: 'xl/styles.xml' });
 		f.xml = xmlh + '<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">'
 						+ '<numFmts count="2"><numFmt numFmtId="164" formatCode="yyyy&quot;-&quot;mm&quot;-&quot;dd" /><numFmt numFmtId="165" formatCode="yyyy&quot;-&quot;mm&quot;-&quot;dd&quot; &quot;h&quot;:&quot;mm&quot;:&quot;ss" /></numFmts>'
 						+ '<fonts count="2"><font><sz val="10.0"/><color rgb="FF000000"/><name val="Arial"/></font><font><b/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="lightGray"/></fill></fills><borders count="1"><border><left/><right/><top/><bottom/></border></borders>'
@@ -51,24 +55,24 @@ export class NullXlsx extends NullDownloader {
 						+ '<xf borderId="0" fillId="0" fontId="0" numFmtId="165" xfId="0" applyAlignment="1" applyFont="1" applyNumberFormat="1"><alignment /></xf>'
 						+ '</cellXfs><cellStyles count="1"><cellStyle xfId="0" name="Normal" builtinId="0"/></cellStyles><dxfs count="0"/></styleSheet>';
 
-		files.push(f = {name: 'xl/sharedStrings.xml'});
+		files.push(f = { name: 'xl/sharedStrings.xml' });
 		f.xml = xmlh + '<sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" count="2" uniqueCount="2">'
 						+ '<si><t>text here</t></si>'
 						+ '</sst>';
 
-		files.push(f = {name: 'xl/workbook.xml'});
+		files.push(f = { name: 'xl/workbook.xml' });
 		f.xml = xmlh + '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><workbookPr/><sheets>'
 						+ this.sheets.map(x => `<sheet state="visible" name="${x.name}" sheetId="${x.id}" r:id="rId${x.id + 2}"/>`).join('')
 				+ '</sheets><definedNames/><calcPr/></workbook>';
 
-		files.push(f = {name: 'xl/_rels/workbook.xml.rels'});
+		files.push(f = { name: 'xl/_rels/workbook.xml.rels' });
 		f.xml = xmlh + '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
 						+ '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml" />'
 						+ '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings" Target="sharedStrings.xml"/>'
 						+ this.sheets.map(x => `<Relationship Id="rId${x.id + 2}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${x.id}.xml"/>`).join('')
 						+ '</Relationships>';
 
-		files.push(f = {name: '[Content_Types].xml'});
+		files.push(f = { name: '[Content_Types].xml' });
 		f.xml = xmlh + '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default ContentType="application/xml" Extension="xml"/>'
 						+ '<Default ContentType="application/vnd.openxmlformats-package.relationships+xml" Extension="rels"/>'
 						+ this.sheets.map(x => `<Override ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml" PartName="/xl/worksheets/sheet${x.id}.xml"/>`).join('')
@@ -76,7 +80,7 @@ export class NullXlsx extends NullDownloader {
 						+ '<Override ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml" PartName="/xl/styles.xml" />'
 						+ '<Override ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml" PartName="/xl/workbook.xml"/></Types>';
 
-		files.push(f = {name: '_rels/.rels'});
+		files.push(f = { name: '_rels/.rels' });
 		f.xml = xmlh + '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>';
 
 		for (const x of this.sheets) {
