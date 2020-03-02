@@ -1,4 +1,4 @@
-/* eslint no-global-assign: off, no-unused-vars: off */
+/* eslint no-global-assign: off */
 
 import { trace } from './trace';
 
@@ -8,9 +8,9 @@ import { trace } from './trace';
  */
 export class NullDownloader {
 	/**
-	* Creates a new  downloader
-	* @param {string} filename Name of file once generated
-	* @param {string} mimeType The download mime type
+	 * Creates a new  downloader
+	 * @param {string} filename Name of file once generated
+	 * @param {string} mimeType The download mime type
 	 */
 
 	constructor(filename, mimeType) {
@@ -21,9 +21,9 @@ export class NullDownloader {
 	}
 
 	/**
-	* @abstract
-	* @return {ArrayBuffer}  A buffer to download
-	* */
+	 * @abstract
+	 * @return {ArrayBuffer}  A buffer to download
+	 */
 	generate() { /* */ }
 
 	/**
