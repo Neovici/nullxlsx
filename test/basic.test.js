@@ -9,16 +9,24 @@ suite('basic', () => {
 	test('adds sheet from simple data', () => {
 		// Creates a test file
 		const xlsx = new NullXlsx('test.xlsx');
-		xlsx.addSheetFromData([['Title 1', 'Title 2'], ['Carl', 12.4], ['Mia', 678]]);
-		assert.deepEqual(xlsx.sheets[0].data[0], ['Title 1', 'Title 2']);
-		assert.deepEqual(xlsx.sheets[0].data[1], ['Carl', 12.4]);
-		assert.deepEqual(xlsx.sheets[0].data[2], ['Mia', 678]);
+		xlsx.addSheetFromData([
+			['Name', 'Number', 'Date'],
+			['Carl', 12.4, new Date('2012-01-01')],
+			['Mia', 678, new Date('2019-12-31')]
+		]);
+		assert.deepEqual(xlsx.sheets[0].data[0], ['Name', 'Number', 'Date']);
+		assert.deepEqual(xlsx.sheets[0].data[1], ['Carl', 12.4, new Date('2012-01-01')]);
+		assert.deepEqual(xlsx.sheets[0].data[2], ['Mia', 678, new Date('2019-12-31')]);
 	});
 
 	test('createDownloadLink calls generate', () => {
 		// Creates a test file
 		const xlsx = new NullXlsx('test.xlsx');
-		xlsx.addSheetFromData([['Title 1', 'Title 2'], ['Carl', 12.4], ['Mia', 678]]);
+		xlsx.addSheetFromData([
+			['Name', 'Number', 'Date'],
+			['Carl', 12.4, new Date('2012-01-01')],
+			['Mia', 678, new Date('2019-12-31')]
+		]);
 
 		const spyGenerate = spy(xlsx, 'generate'),
 			link = xlsx.createDownloadLink('Download test.xlsx');
