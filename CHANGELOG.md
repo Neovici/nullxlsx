@@ -1,3 +1,10 @@
+## [3.0.4](https://github.com/neovici/nullxlsx/compare/v3.0.3...v3.0.4) (2020-03-04)
+
+
+### Bug Fixes
+
+* refactor ([97b25e2](https://github.com/neovici/nullxlsx/commit/97b25e2e7087b81f825ff60f15f448b7e0393311))
+
 ## [3.0.3](https://github.com/neovici/nullxlsx/compare/v3.0.2...v3.0.3) (2020-03-03)
 
 
