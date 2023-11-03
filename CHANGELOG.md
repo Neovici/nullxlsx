@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/neovici/nullxlsx/compare/v3.0.4...v3.1.0) (2023-11-03)
+
+
+### Features
+
+* update dependencies and workflows ([e06c8d2](https://github.com/neovici/nullxlsx/commit/e06c8d2906be5cbfee8bb4f7ad50c9ac40c21c73))
+
 ## [3.0.4](https://github.com/neovici/nullxlsx/compare/v3.0.3...v3.0.4) (2020-03-04)
 
 
