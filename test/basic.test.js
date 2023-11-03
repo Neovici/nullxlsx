@@ -1,8 +1,5 @@
 import { NullXlsx } from '..';
-import {
-	spy,
-	assert as sinonAssert
-} from 'sinon';
+import { spy, assert as sinonAssert } from 'sinon';
 import { assert } from '@open-wc/testing';
 
 suite('basic', () => {
@@ -12,11 +9,19 @@ suite('basic', () => {
 		xlsx.addSheetFromData([
 			['Name', 'Number', 'Date'],
 			['Carl', 12.4, new Date('2012-01-01')],
-			['Mia', 678, new Date('2019-12-31')]
+			['Mia', 678, new Date('2019-12-31')],
 		]);
 		assert.deepEqual(xlsx.sheets[0].data[0], ['Name', 'Number', 'Date']);
-		assert.deepEqual(xlsx.sheets[0].data[1], ['Carl', 12.4, new Date('2012-01-01')]);
-		assert.deepEqual(xlsx.sheets[0].data[2], ['Mia', 678, new Date('2019-12-31')]);
+		assert.deepEqual(xlsx.sheets[0].data[1], [
+			'Carl',
+			12.4,
+			new Date('2012-01-01'),
+		]);
+		assert.deepEqual(xlsx.sheets[0].data[2], [
+			'Mia',
+			678,
+			new Date('2019-12-31'),
+		]);
 	});
 
 	test('createDownloadLink calls generate', () => {
@@ -25,7 +30,7 @@ suite('basic', () => {
 		xlsx.addSheetFromData([
 			['Name', 'Number', 'Date'],
 			['Carl', 12.4, new Date('2012-01-01')],
-			['Mia', 678, new Date('2019-12-31')]
+			['Mia', 678, new Date('2019-12-31')],
 		]);
 
 		const spyGenerate = spy(xlsx, 'generate'),

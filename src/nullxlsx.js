@@ -49,7 +49,7 @@ export class NullXlsx extends NullDownloader {
 	 * Generates the xlsx file
 	 * @return {ArrayBuffer} Array buffer containing the xlsx
 	 */
-	generate() { // eslint-disable-line max-lines-per-function
+	generate() {
 		const headerXml = [{
 				name: 'xl/styles.xml',
 				xml: `<styleSheet xmlns="${ mainSpreadSheetSchema }" xmlns:mc="${ schemaBaseUrl }/markup-compatibility/2006">`

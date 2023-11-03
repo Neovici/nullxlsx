@@ -58,7 +58,7 @@ export class NullZipArchive extends NullDownloader {
 	 * Generate a zip archive
 	 * @return {ArrayBuffer} Array buffer containing the zip archive
 	 */
-	generate() { // eslint-disable-line max-lines-per-function, max-statements
+	generate() { // eslint-disable-line max-statements
 		trace('NullZip archive generation started');
 		const filesDict = {};
 		for (const f of this.files) {

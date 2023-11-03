@@ -17,12 +17,9 @@
 	},
 	"scripts": {
 		"lint": "eslint --report-unused-disable-directives --cache --ext .js .",
-		"start": "es-dev-server",
-		"test": "karma start --coverage",
-		"test:watch": "karma start --auto-watch=true --single-run=false",
-		"test:update-snapshots": "karma start --update-snapshots",
-		"test:prune-snapshots": "karma start --prune-snapshots",
-		"test:compatibility": "karma start --compatibility all --auto-watch=true --single-run=false"
+		"start": "wds",
+		"test": "wtr --coverage",
+		"test:watch": "wtr --watch"
 	},
 	"release": {
 		"plugins": [
@@ -48,29 +45,17 @@
 			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
 		}
 	},
-	"dependencies": {},
 	"devDependencies": {
-		"@commitlint/cli": "^8.3.5",
-		"@commitlint/config-conventional": "^8.3.4",
-		"@neovici/eslint-config": "^1.2.0",
-		"@neovici/github-actions-eslint-annotator": "^0.4.0",
-		"@open-wc/testing": "^2.5.4",
-		"@open-wc/testing-karma": "^3.3.0",
-		"@semantic-release/changelog": "^5.0.0",
-		"@semantic-release/git": "^9.0.0",
-		"babel-eslint": "^10.1.0",
-		"deepmerge": "^4.2.2",
-		"es-dev-server": "^1.42.0",
-		"eslint": "^6.8.0",
-		"eslint-plugin-html": "^6.0.0",
-		"eslint-plugin-import": "^2.20.1",
+		"@commitlint/cli": "^18",
+		"@commitlint/config-conventional": "^18",
+		"@neovici/cfg": "^1.41.0",
+		"@open-wc/testing": "^3.0.0",
+		"@semantic-release/changelog": "^6.0.0",
+		"@semantic-release/git": "^10.0.0",
 		"husky": "^4.2.3",
-		"karma": "^4.4.1",
-		"karma-firefox-launcher": "^1.3.0",
-		"karma-sauce-launcher": "^2.0.2",
-		"lit-html": "^1.1.2",
-		"semantic-release": "^17.0.4",
-		"sinon": "^9.0.0"
+		"lit-html": "^2.0.0",
+		"semantic-release": "^22.0.0",
+		"sinon": "^17"
 	},
 	"type": "module"
 }
